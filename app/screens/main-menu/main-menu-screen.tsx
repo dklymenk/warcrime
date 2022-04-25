@@ -4,7 +4,6 @@ import { TextStyle, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavigatorParamList } from "../../navigators"
 import { Button, Header, Screen } from "../../components"
-import { useNavigation } from "@react-navigation/native"
 import { color, spacing, typography } from "../../theme"
 
 const ROOT: ViewStyle = {
@@ -44,9 +43,7 @@ const HEADER_TITLE: TextStyle = {
 }
 
 export const MainMenuScreen: FC<StackScreenProps<NavigatorParamList, "mainMenu">> = observer(
-  function MainMenuScreen() {
-    // Pull in navigation via hook
-    const navigation = useNavigation()
+  function MainMenuScreen({ navigation }) {
     const goBack = () => navigation.goBack()
     return (
       <Screen style={ROOT} preset="scroll">
@@ -62,7 +59,7 @@ export const MainMenuScreen: FC<StackScreenProps<NavigatorParamList, "mainMenu">
           style={CONTINUE}
           textStyle={CONTINUE_TEXT}
           tx="mainMenuScreen.camera"
-          // onPress={nextScreen}
+          onPress={() => navigation.navigate("camera")}
         />
         <Button
           testID="gallery"
