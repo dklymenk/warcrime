@@ -14,6 +14,12 @@
     "instructions": "<Інструкція з користування>",
     "continue": "ПРОДОВЖИТИ АНОНІМНО"
   },
+  "mainMenuScreen": {
+    "mainMenu": "ГОЛОВНЕ МЕНЮ",
+    "camera": "КАМЕРА",
+    "gallery": "ГАЛЕРЕЯ",
+    "reports": "МОЇ ЗВІТИ"
+  },
   "demoScreen": {
     "howTo": "HOW TO",
     "title": "What’s In This Stack?",
