@@ -13,7 +13,7 @@ import {
 import { color, spacing, typography } from "../../theme"
 import { NavigatorParamList } from "../../navigators"
 
-const bowserLogo = require("./bowser.png")
+const orgLogo = require("./org.png")
 
 const FULL: ViewStyle = { flex: 1 }
 const CONTAINER: ViewStyle = {
@@ -38,10 +38,6 @@ const HEADER_TITLE: TextStyle = {
   textAlign: "center",
   letterSpacing: 1.5,
 }
-const TITLE_WRAPPER: TextStyle = {
-  ...TEXT,
-  textAlign: "center",
-}
 const TITLE: TextStyle = {
   ...TEXT,
   ...BOLD,
@@ -49,16 +45,10 @@ const TITLE: TextStyle = {
   lineHeight: 38,
   textAlign: "center",
 }
-const ALMOST: TextStyle = {
-  ...TEXT,
-  ...BOLD,
-  fontSize: 26,
-  fontStyle: "italic",
-}
-const BOWSER: ImageStyle = {
+const ORG_LOGO: ImageStyle = {
   alignSelf: "center",
   marginVertical: spacing[5],
-  maxWidth: "100%",
+  maxWidth: "50%",
   width: 343,
   height: 230,
 }
@@ -94,22 +84,11 @@ export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> 
       <View testID="WelcomeScreen" style={FULL}>
         <GradientBackground colors={["#422443", "#281b34"]} />
         <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
-          <Header headerTx="welcomeScreen.poweredBy" style={HEADER} titleStyle={HEADER_TITLE} />
-          <Text style={TITLE_WRAPPER}>
-            <Text style={TITLE} text="Your new app, " />
-            <Text style={ALMOST} text="almost" />
-            <Text style={TITLE} text="!" />
-          </Text>
-          <Text style={TITLE} preset="header" tx="welcomeScreen.readyForLaunch" />
-          <Image source={bowserLogo} style={BOWSER} />
-          <Text style={CONTENT}>
-            This probably isn't what your app is going to look like. Unless your designer handed you
-            this screen and, in that case, congrats! You're ready to ship.
-          </Text>
-          <Text style={CONTENT}>
-            For everyone else, this is where you'll see a live preview of your fully functioning app
-            using Ignite.
-          </Text>
+          <Header headerTx="welcomeScreen.org" style={HEADER} titleStyle={HEADER_TITLE} />
+          <Text style={TITLE} preset="header" tx="welcomeScreen.appName" />
+          <Image source={orgLogo} style={ORG_LOGO} />
+          <Text style={CONTENT} tx="welcomeScreen.intro" />
+          <Text style={CONTENT} tx="welcomeScreen.instructions" />
         </Screen>
         <SafeAreaView style={FOOTER}>
           <View style={FOOTER_CONTENT}>
