@@ -1,10 +1,9 @@
-import React, { FC, useCallback, useEffect, useState } from "react"
+import React, { FC, useCallback, useEffect, useRef, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { Linking, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavigatorParamList } from "../../navigators"
-import { Screen, Text } from "../../components"
-// import { useNavigation } from "@react-navigation/native"
+import { Button, Screen, Text } from "../../components"
 import { color } from "../../theme"
 import { Camera, CameraPermissionStatus, useCameraDevices } from "react-native-vision-camera"
 
@@ -44,6 +43,15 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
 
     const devices = useCameraDevices()
     const device = devices.back
+
+    const camera = useRef<Camera>(null)
+    const takePicture = async () => {
+      const photo = await camera.current.takePhoto({
+        flash: "on",
+      })
+      console.log(photo)
+    }
+
     return (
       <Screen style={ROOT} preset="scroll">
         <Text preset="header" text="camera" />
@@ -61,8 +69,9 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
         )}
 
         {cameraPermission === "authorized" && microphonePermission === "authorized" && device && (
-          <Camera style={FULL} device={device} isActive={true} />
+          <Camera ref={camera} style={FULL} device={device} isActive={true} photo={true} />
         )}
+        <Button onPress={takePicture} />
       </Screen>
     )
   },
