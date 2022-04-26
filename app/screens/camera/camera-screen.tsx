@@ -6,6 +6,9 @@ import { NavigatorParamList } from "../../navigators"
 import { Button, Screen, Text } from "../../components"
 import { color } from "../../theme"
 import { Camera, CameraPermissionStatus, useCameraDevices } from "react-native-vision-camera"
+import { useStores } from "../../models"
+import "react-native-get-random-values"
+import { v4 as uuidv4 } from "uuid"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
@@ -44,12 +47,14 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
     const devices = useCameraDevices()
     const device = devices.back
 
+    const { reportStore } = useStores()
+
     const camera = useRef<Camera>(null)
     const takePicture = async () => {
       const photo = await camera.current.takePhoto({
         flash: "on",
       })
-      console.log(photo)
+      reportStore.addReport({ id: uuidv4(), photo: photo.path, description: "test" })
     }
 
     return (
