@@ -6,7 +6,7 @@ import { NavigatorParamList } from "../../navigators"
 import { Button, Screen, Text } from "../../components"
 import { color } from "../../theme"
 import { Camera, CameraPermissionStatus, useCameraDevices } from "react-native-vision-camera"
-import { useStores } from "../../models"
+import { ReportStatus, useStores } from "../../models"
 import "react-native-get-random-values"
 import { v4 as uuidv4 } from "uuid"
 
@@ -54,7 +54,12 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
       const photo = await camera.current.takePhoto({
         flash: "on",
       })
-      reportStore.addReport({ id: uuidv4(), photo: photo.path, description: "test" })
+
+      reportStore.addReport({
+        id: uuidv4(),
+        photo: photo.path,
+        status: ReportStatus.Pending,
+      })
     }
 
     return (

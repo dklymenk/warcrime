@@ -1,12 +1,20 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
 
+export enum ReportStatus {
+  Pending = "PENDING",
+  Uploaded = "UPLOADED",
+  Accepted = "ACCEPTED",
+  Rejected = "REJECTED",
+}
+
 /**
  * Model description here for TypeScript hints.
  */
 export const ReportModel = types.model("Report").props({
   id: types.identifier,
-  description: types.maybe(types.string),
+  description: types.optional(types.string, ""),
   photo: types.string,
+  status: types.enumeration<ReportStatus>("ReportStatus", Object.values(ReportStatus)),
 })
 
 type ReportType = Instance<typeof ReportModel>

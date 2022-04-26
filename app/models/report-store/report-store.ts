@@ -1,6 +1,6 @@
-import { Instance, SnapshotOut, types } from "mobx-state-tree"
+import { Instance, SnapshotOrInstance, SnapshotOut, types } from "mobx-state-tree"
 import { withEnvironment } from "../extensions/with-environment"
-import { ReportModel, ReportSnapshot } from "../report/report"
+import { ReportModel } from "../report/report"
 
 /**
  * Model description here for TypeScript hints.
@@ -14,8 +14,8 @@ export const ReportStoreModel = types
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((self) => ({
-    addReport: (reportSnapshot: ReportSnapshot) => {
-      self.reports.push(reportSnapshot)
+    addReport: (report: SnapshotOrInstance<typeof ReportModel>) => {
+      self.reports.push(report)
     },
   }))
 
