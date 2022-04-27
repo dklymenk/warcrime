@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { Linking, ViewStyle } from "react-native"
+import { Linking, View, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavigatorParamList } from "../../navigators"
 import { Button, Screen, Text } from "../../components"
@@ -15,6 +15,15 @@ const ROOT: ViewStyle = {
   flex: 1,
 }
 const FULL: ViewStyle = { flex: 1 }
+const CAMERA_CONTAINER: ViewStyle = { flex: 1 }
+const BUTTON: ViewStyle = {
+  position: "absolute",
+  width: 64,
+  height: 64,
+  borderRadius: 50,
+  bottom: 8,
+  alignSelf: "center",
+}
 
 export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = observer(
   function CameraScreen() {
@@ -79,9 +88,11 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
         )}
 
         {cameraPermission === "authorized" && microphonePermission === "authorized" && device && (
-          <Camera ref={camera} style={FULL} device={device} isActive={true} photo={true} />
+          <View style={CAMERA_CONTAINER}>
+            <Camera ref={camera} style={FULL} device={device} isActive={true} photo={true} />
+            <Button style={BUTTON} onPress={takePicture} />
+          </View>
         )}
-        <Button onPress={takePicture} />
       </Screen>
     )
   },
