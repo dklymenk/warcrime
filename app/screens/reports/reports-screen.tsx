@@ -1,6 +1,6 @@
 import React, { FC } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle } from "react-native"
+import { View, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavigatorParamList } from "../../navigators"
 import { Report, Screen, Text } from "../../components"
@@ -14,6 +14,12 @@ const ROOT: ViewStyle = {
   flex: 1,
 }
 
+const CONTAINER: ViewStyle = {
+  justifyContent: "center",
+  flexDirection: "row",
+  flexWrap: "wrap",
+}
+
 export const ReportsScreen: FC<StackScreenProps<NavigatorParamList, "reports">> = observer(
   function ReportsScreen() {
     // Pull in one of our MST stores
@@ -25,9 +31,11 @@ export const ReportsScreen: FC<StackScreenProps<NavigatorParamList, "reports">> 
     return (
       <Screen style={ROOT} preset="scroll">
         <Text preset="header" text="reports" />
-        {reports.map((report) => (
-          <Report key={report.id} report={report} />
-        ))}
+        <View style={CONTAINER}>
+          {reports.map((report) => (
+            <Report key={report.id} report={report} />
+          ))}
+        </View>
       </Screen>
     )
   },
