@@ -73,7 +73,7 @@ export const MainMenuScreen: FC<StackScreenProps<NavigatorParamList, "mainMenu">
           style={CONTINUE}
           textStyle={CONTINUE_TEXT}
           tx="mainMenuScreen.reports"
-          // onPress={nextScreen}
+          onPress={() => navigation.navigate("reports")}
         />
       </Screen>
     )
