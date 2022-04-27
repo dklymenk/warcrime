@@ -15,7 +15,6 @@ const ROOT: ViewStyle = {
 }
 
 const CONTAINER: ViewStyle = {
-  justifyContent: "center",
   flexDirection: "row",
   flexWrap: "wrap",
 }
