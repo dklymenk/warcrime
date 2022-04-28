@@ -24,7 +24,8 @@
     "cameraPermissionRequired": "Для цієї функції потрібен доступ до камери",
     "microphonePermissionRequired": "Для цієї функції потрібен доступ до мікрофона",
     "locationPermissionRequired": "Для цієї функції потрібен доступ до місцезнаходження",
-    "grant": "НАДАТИ"
+    "grant": "НАДАТИ",
+    "waitingForLocation": "в очікуванні локації..."
   },
   "demoScreen": {
     "howTo": "HOW TO",
