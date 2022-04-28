@@ -75,16 +75,16 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
       <Screen style={ROOT} preset="scroll">
         <Text preset="header" text="camera" />
         {cameraPermission && cameraPermission !== "authorized" && (
-          <Text>
-            Vision Camera needs <Text>Camera permission</Text>.
-            <Text onPress={requestCameraPermission}>Grant</Text>
-          </Text>
+          <>
+            <Text tx={"cameraScreen.cameraPermissionRequired"} />
+            <Button tx={"cameraScreen.grant"} onPress={requestCameraPermission} />
+          </>
         )}
         {microphonePermission && microphonePermission !== "authorized" && (
-          <Text>
-            Vision Camera needs <Text>Microphone permission</Text>.
-            <Text onPress={requestMicrophonePermission}>Grant</Text>
-          </Text>
+          <>
+            <Text tx={"cameraScreen.microphonePermissionRequired"} />
+            <Button tx={"cameraScreen.grant"} onPress={requestMicrophonePermission} />
+          </>
         )}
 
         {cameraPermission === "authorized" && microphonePermission === "authorized" && device && (

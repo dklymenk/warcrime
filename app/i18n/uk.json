@@ -20,7 +20,12 @@
     "gallery": "ГАЛЕРЕЯ",
     "reports": "МОЇ ЗВІТИ"
   },
-  "cameraScreen": {},
+  "cameraScreen": {
+    "cameraPermissionRequired": "Для цієї функції потрібен доступ до камери",
+    "microphonePermissionRequired": "Для цієї функції потрібен доступ до мікрофона",
+    "locationPermissionRequired": "Для цієї функції потрібен доступ до місцезнаходження",
+    "grant": "НАДАТИ"
+  },
   "demoScreen": {
     "howTo": "HOW TO",
     "title": "What’s In This Stack?",
