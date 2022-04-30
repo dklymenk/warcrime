@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite"
 import { ViewStyle, Image, ImageStyle, TextStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavigatorParamList } from "../../navigators"
-import { Screen, Text } from "../../components"
+import { Screen, Text, TextField } from "../../components"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../../models"
 import { color } from "../../theme"
@@ -24,6 +24,9 @@ const POSITION: TextStyle = {
   right: 8,
   color: color.palette.offWhite,
 }
+const TEXT_FIELD_INPUT: ViewStyle = {
+  maxHeight: 120,
+}
 
 export const ReportScreen: FC<StackScreenProps<NavigatorParamList, "report">> = observer(
   function ReportScreen({ route }) {
@@ -38,6 +41,15 @@ export const ReportScreen: FC<StackScreenProps<NavigatorParamList, "report">> = 
       <Screen style={ROOT} preset="scroll">
         <Image resizeMode="contain" style={PHOTO} source={{ uri: `file://${report.photo}` }} />
         {report.latLong && <Text style={POSITION}>{report.latLong}</Text>}
+        <TextField
+          labelTx="reportScreen.descriptionLabel"
+          inputStyle={TEXT_FIELD_INPUT}
+          multiline
+          value={report.description}
+          scrollEnabled
+          placeholderTx="reportScreen.descriptionPlaceholder"
+          onChangeText={(v) => report.setDescription(v)}
+        />
       </Screen>
     )
   },

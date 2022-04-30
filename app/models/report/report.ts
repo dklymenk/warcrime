@@ -10,13 +10,20 @@ export enum ReportStatus {
 /**
  * Model description here for TypeScript hints.
  */
-export const ReportModel = types.model("Report").props({
-  id: types.identifier,
-  description: types.optional(types.string, ""),
-  photo: types.string,
-  status: types.enumeration<ReportStatus>("ReportStatus", Object.values(ReportStatus)),
-  latLong: types.maybe(types.string),
-})
+export const ReportModel = types
+  .model("Report")
+  .props({
+    id: types.identifier,
+    description: types.optional(types.string, ""),
+    photo: types.string,
+    status: types.enumeration<ReportStatus>("ReportStatus", Object.values(ReportStatus)),
+    latLong: types.maybe(types.string),
+  })
+  .actions((self) => ({
+    setDescription: (description: string) => {
+      self.description = description
+    },
+  }))
 
 type ReportType = Instance<typeof ReportModel>
 export interface Report extends ReportType {}

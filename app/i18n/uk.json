@@ -27,6 +27,10 @@
     "grant": "НАДАТИ",
     "waitingForLocation": "в очікуванні локації..."
   },
+  "reportScreen": {
+    "descriptionLabel": "Опис",
+    "descriptionPlaceholder": "Додайте опис до звіту..."
+  },
   "demoScreen": {
     "howTo": "HOW TO",
     "title": "What’s In This Stack?",
