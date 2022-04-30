@@ -146,17 +146,20 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
           </>
         )}
 
-        {cameraPermission === "authorized" && microphonePermission === "authorized" && device && (
-          <View style={CAMERA_CONTAINER}>
-            <Camera ref={camera} style={FULL} device={device} isActive={true} photo={true} />
-            <Text style={[POSITION, position && POSITION_FOUND]}>
-              {position
-                ? `${position.coords.latitude}, ${position.coords.longitude}`
-                : translate("cameraScreen.waitingForLocation")}
-            </Text>
-            <Button style={BUTTON} onPress={takePicture} />
-          </View>
-        )}
+        {cameraPermission === "authorized" &&
+          microphonePermission === "authorized" &&
+          locationPermission === PermissionsAndroid.RESULTS.GRANTED &&
+          device && (
+            <View style={CAMERA_CONTAINER}>
+              <Camera ref={camera} style={FULL} device={device} isActive={true} photo={true} />
+              <Text style={[POSITION, position && POSITION_FOUND]}>
+                {position
+                  ? `${position.coords.latitude}, ${position.coords.longitude}`
+                  : translate("cameraScreen.waitingForLocation")}
+              </Text>
+              <Button style={BUTTON} onPress={takePicture} />
+            </View>
+          )}
       </Screen>
     )
   },
