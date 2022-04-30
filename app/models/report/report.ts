@@ -15,6 +15,7 @@ export const ReportModel = types.model("Report").props({
   description: types.optional(types.string, ""),
   photo: types.string,
   status: types.enumeration<ReportStatus>("ReportStatus", Object.values(ReportStatus)),
+  latLong: types.maybe(types.string),
 })
 
 type ReportType = Instance<typeof ReportModel>

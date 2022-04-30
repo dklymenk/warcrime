@@ -121,6 +121,7 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
         id: uuidv4(),
         photo: photo.path,
         status: ReportStatus.Pending,
+        latLong: position ? `${position.coords.latitude},${position.coords.longitude}` : null,
       })
     }
 
