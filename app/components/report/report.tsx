@@ -1,5 +1,13 @@
 import * as React from "react"
-import { StyleProp, View, ViewStyle, Image, ImageStyle } from "react-native"
+import {
+  StyleProp,
+  View,
+  ViewStyle,
+  Image,
+  ImageStyle,
+  Pressable,
+  GestureResponderEvent,
+} from "react-native"
 import { observer } from "mobx-react-lite"
 import { Report as ReportModel } from "../../models"
 import { color, spacing } from "../../theme"
@@ -34,13 +42,14 @@ export interface ReportProps {
    */
   style?: StyleProp<ViewStyle>
   report: ReportModel
+  onPress?: (event: GestureResponderEvent) => void
 }
 
 /**
  * Describe your component here
  */
 export const Report = observer(function Report(props: ReportProps) {
-  const { style, report } = props
+  const { style, report, onPress } = props
   const styles = Object.assign({}, CONTAINER, style)
 
   const source = report.photo.indexOf("data/user")
@@ -48,9 +57,9 @@ export const Report = observer(function Report(props: ReportProps) {
     : { uri: report.photo }
 
   return (
-    <View style={styles}>
+    <Pressable onPress={onPress} style={styles}>
       <Image style={IMAGE} key={report.id} source={source} />
       <View style={STATUS_CIRCLE} />
-    </View>
+    </Pressable>
   )
 })

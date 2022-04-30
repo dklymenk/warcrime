@@ -15,6 +15,7 @@ import {
   MainMenuScreen,
   CameraScreen,
   ReportsScreen,
+  ReportScreen,
 } from "../screens"
 import { navigationRef, useBackButtonHandler } from "./navigation-utilities"
 
@@ -37,6 +38,7 @@ export type NavigatorParamList = {
   mainMenu: undefined
   camera: undefined
   reports: undefined
+  report: { id: string }
   // 🔥 Your screens go here
 }
 
@@ -57,6 +59,7 @@ const AppStack = () => {
       <Stack.Screen name="mainMenu" component={MainMenuScreen} />
       <Stack.Screen name="camera" component={CameraScreen} />
       <Stack.Screen name="reports" component={ReportsScreen} />
+      <Stack.Screen name="report" component={ReportScreen} />
       {/** 🔥 Your screens go here */}
     </Stack.Navigator>
   )

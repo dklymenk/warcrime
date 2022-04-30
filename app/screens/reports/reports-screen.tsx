@@ -4,8 +4,6 @@ import { View, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavigatorParamList } from "../../navigators"
 import { Report, Screen, Text } from "../../components"
-// import { useNavigation } from "@react-navigation/native"
-// import { useStores } from "../../models"
 import { color } from "../../theme"
 import { useStores } from "../../models"
 
@@ -20,19 +18,21 @@ const CONTAINER: ViewStyle = {
 }
 
 export const ReportsScreen: FC<StackScreenProps<NavigatorParamList, "reports">> = observer(
-  function ReportsScreen() {
+  function ReportsScreen({ navigation }) {
     // Pull in one of our MST stores
     const { reportStore } = useStores()
     const { reports } = reportStore
 
-    // Pull in navigation via hook
-    // const navigation = useNavigation()
     return (
       <Screen style={ROOT} preset="scroll">
         <Text preset="header" text="reports" />
         <View style={CONTAINER}>
           {reports.map((report) => (
-            <Report key={report.id} report={report} />
+            <Report
+              onPress={() => navigation.navigate("report", { id: report.id })}
+              key={report.id}
+              report={report}
+            />
           ))}
         </View>
       </Screen>
