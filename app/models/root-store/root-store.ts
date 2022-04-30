@@ -1,6 +1,7 @@
-import { Instance, SnapshotOut, types } from "mobx-state-tree"
+import { getSnapshot, Instance, SnapshotOut, types } from "mobx-state-tree"
 import { CharacterStoreModel } from "../character-store/character-store"
 import { ReportStoreModel } from "../report-store/report-store"
+import { UserModel } from "../user/user"
 
 /**
  * A RootStore model.
@@ -9,6 +10,7 @@ import { ReportStoreModel } from "../report-store/report-store"
 export const RootStoreModel = types.model("RootStore").props({
   characterStore: types.optional(CharacterStoreModel, {} as any),
   reportStore: types.optional(ReportStoreModel, {} as any),
+  user: types.optional(UserModel, getSnapshot(UserModel.create()))
 })
 
 /**
