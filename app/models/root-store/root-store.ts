@@ -6,11 +6,10 @@ import { UserModel } from "../user/user"
 /**
  * A RootStore model.
  */
-// prettier-ignore
 export const RootStoreModel = types.model("RootStore").props({
   characterStore: types.optional(CharacterStoreModel, {} as any),
   reportStore: types.optional(ReportStoreModel, {} as any),
-  user: types.optional(UserModel, getSnapshot(UserModel.create()))
+  user: types.optional(UserModel, getSnapshot(UserModel.create())),
 })
 
 /**

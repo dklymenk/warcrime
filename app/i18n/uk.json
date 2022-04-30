@@ -29,7 +29,8 @@
   },
   "reportScreen": {
     "descriptionLabel": "Опис",
-    "descriptionPlaceholder": "Додайте опис до звіту..."
+    "descriptionPlaceholder": "Додайте опис до звіту...",
+    "send": "ВІДПРАВИТИ"
   },
   "demoScreen": {
     "howTo": "HOW TO",

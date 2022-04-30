@@ -1,4 +1,5 @@
-import { Instance, SnapshotOut, types } from "mobx-state-tree"
+import { flow, getRoot, Instance, SnapshotOut, types } from "mobx-state-tree"
+import { RootStore } from "../root-store/root-store"
 
 export enum ReportStatus {
   Pending = "PENDING",
@@ -18,11 +19,22 @@ export const ReportModel = types
     photo: types.string,
     status: types.enumeration<ReportStatus>("ReportStatus", Object.values(ReportStatus)),
     latLong: types.maybe(types.string),
+    loading: types.optional(types.boolean, false),
   })
   .actions((self) => ({
     setDescription: (description: string) => {
       self.description = description
     },
+  }))
+  .actions((self) => ({
+    upload: flow(function* upload(): any {
+      self.loading = true
+      const root = getRoot<RootStore>(self)
+      const { id, description, photo, status, latLong } = self
+      console.log({ id, description, photo, status, latLong, userId: root.user.id })
+      yield new Promise<void>((resolve) => setTimeout(() => resolve(), 1000))
+      self.loading = false
+    }),
   }))
 
 type ReportType = Instance<typeof ReportModel>

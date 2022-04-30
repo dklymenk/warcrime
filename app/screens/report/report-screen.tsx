@@ -1,9 +1,9 @@
 import React, { FC } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, Image, ImageStyle, TextStyle } from "react-native"
+import { ViewStyle, Image, ImageStyle, TextStyle, ActivityIndicator, View } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavigatorParamList } from "../../navigators"
-import { Screen, Text, TextField } from "../../components"
+import { Button, Screen, Text, TextField } from "../../components"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../../models"
 import { color } from "../../theme"
@@ -26,6 +26,21 @@ const POSITION: TextStyle = {
 }
 const TEXT_FIELD_INPUT: ViewStyle = {
   maxHeight: 120,
+}
+const LOADING_SPINNER: ViewStyle = {}
+const LOADING_CONTAINER: ViewStyle = {
+  position: "absolute",
+  flex: 1,
+  width: "100%",
+  height: "100%",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  opacity: 0.9,
+  backgroundColor: color.palette.black,
+}
+const BUTTON_DISABLED: ViewStyle = {
+  backgroundColor: color.palette.lightGrey,
 }
 
 export const ReportScreen: FC<StackScreenProps<NavigatorParamList, "report">> = observer(
@@ -50,6 +65,21 @@ export const ReportScreen: FC<StackScreenProps<NavigatorParamList, "report">> = 
           placeholderTx="reportScreen.descriptionPlaceholder"
           onChangeText={(v) => report.setDescription(v)}
         />
+        <Button
+          tx="reportScreen.send"
+          style={!report.description && BUTTON_DISABLED}
+          disabled={!report.description}
+          onPress={() => report.upload()}
+        ></Button>
+        {report.loading && (
+          <View style={LOADING_CONTAINER}>
+            <ActivityIndicator
+              color={color.palette.offWhite}
+              size={"large"}
+              style={LOADING_SPINNER}
+            />
+          </View>
+        )}
       </Screen>
     )
   },
