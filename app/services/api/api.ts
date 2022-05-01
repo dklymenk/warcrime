@@ -99,4 +99,33 @@ export class Api {
       return { kind: "bad-data" }
     }
   }
+
+  /**
+   * Uploads a single file
+   */
+
+  async uploadFile(path: string): Promise<Types.UploadFileResult> {
+    const form = new FormData()
+    const fileName = path.split("/").pop()
+    form.append("file", { uri: `file:///${path}`, name: fileName, type: "image/jpg" } as any)
+    const headers = {
+      "Content-Type": "multipart/form-data",
+    }
+    // make the api call
+    const response: ApiResponse<any> = await this.apisauce.post("/upload", form, { headers })
+
+    // the typical ways to die when calling an api
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
+
+    // transform the data into the format we are expecting
+    try {
+      const filename: string = response.data.filename
+      return { kind: "ok", upload: { filename } }
+    } catch {
+      return { kind: "bad-data" }
+    }
+  }
 }

@@ -1,4 +1,6 @@
 import { flow, getRoot, Instance, SnapshotOut, types } from "mobx-state-tree"
+import { Api } from "../../services/api"
+import { withEnvironment } from "../extensions/with-environment"
 import { RootStore } from "../root-store/root-store"
 
 export enum ReportStatus {
@@ -13,6 +15,7 @@ export enum ReportStatus {
  */
 export const ReportModel = types
   .model("Report")
+  .extend(withEnvironment)
   .props({
     id: types.identifier,
     description: types.optional(types.string, ""),
@@ -29,10 +32,18 @@ export const ReportModel = types
   .actions((self) => ({
     upload: flow(function* upload(): any {
       self.loading = true
-      const root = getRoot<RootStore>(self)
-      const { id, description, photo, status, latLong } = self
-      console.log({ id, description, photo, status, latLong, userId: root.user.id })
-      yield new Promise<void>((resolve) => setTimeout(() => resolve(), 1000))
+      try {
+        const root = getRoot<RootStore>(self)
+        const { id, description, photo, status, latLong } = self
+        console.log({ id, description, photo, status, latLong, userId: root.user.id })
+        // yield new Promise<void>((resolve) => setTimeout(() => resolve(), 1000))
+        const api = self.environment.api
+        const result = yield api.uploadFile(photo)
+        console.log(result)
+      } catch (error) {
+        console.log({ error })
+      }
+
       self.loading = false
     }),
   }))
