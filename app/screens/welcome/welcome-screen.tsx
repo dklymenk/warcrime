@@ -88,7 +88,7 @@ export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> 
           <Text style={TITLE} preset="header" tx="welcomeScreen.appName" />
           <Image source={orgLogo} style={ORG_LOGO} />
           <Text style={CONTENT} tx="welcomeScreen.intro" />
-          <Text style={CONTENT} tx="welcomeScreen.instructions" />
+          {/* <Text style={CONTENT} tx="welcomeScreen.instructions" /> */}
         </Screen>
         <SafeAreaView style={FOOTER}>
           <View style={FOOTER_CONTENT}>
