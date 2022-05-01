@@ -29,31 +29,12 @@ const CONTINUE_TEXT: TextStyle = {
   fontSize: 13,
   letterSpacing: 2,
 }
-const HEADER: TextStyle = {
-  paddingTop: spacing[3],
-  paddingBottom: spacing[5] - 1,
-  paddingHorizontal: 0,
-}
-const HEADER_TITLE: TextStyle = {
-  ...BOLD,
-  fontSize: 12,
-  lineHeight: 15,
-  textAlign: "center",
-  letterSpacing: 1.5,
-}
 
 export const MainMenuScreen: FC<StackScreenProps<NavigatorParamList, "mainMenu">> = observer(
   function MainMenuScreen({ navigation }) {
-    const goBack = () => navigation.goBack()
     return (
       <Screen style={ROOT} preset="scroll">
-        <Header
-          headerTx="mainMenuScreen.mainMenu"
-          leftIcon="back"
-          onLeftPress={goBack}
-          style={HEADER}
-          titleStyle={HEADER_TITLE}
-        />
+        <Header headerTx="mainMenuScreen.mainMenu" leftIcon="back" />
         <Button
           testID="camera"
           style={CONTINUE}

@@ -4,7 +4,7 @@ import { Linking, View, ViewStyle, PermissionsAndroid, TextStyle } from "react-n
 import Geolocation from "react-native-geolocation-service"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavigatorParamList } from "../../navigators"
-import { Button, Screen, Text } from "../../components"
+import { Button, Header, Screen, Text } from "../../components"
 import { color } from "../../theme"
 import { Camera, CameraPermissionStatus, useCameraDevices } from "react-native-vision-camera"
 import { ReportStatus, useStores } from "../../models"
@@ -127,7 +127,7 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
 
     return (
       <Screen style={ROOT} preset="scroll">
-        <Text preset="header" text="camera" />
+        <Header leftIcon="back" headerTx="mainMenuScreen.camera" />
         {cameraPermission && cameraPermission !== "authorized" && (
           <>
             <Text tx={"cameraScreen.cameraPermissionRequired"} />

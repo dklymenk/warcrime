@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite"
 import { ViewStyle, Image, ImageStyle, TextStyle, ActivityIndicator, View } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavigatorParamList } from "../../navigators"
-import { Button, Screen, Text, TextField } from "../../components"
+import { Button, Header, Screen, Text, TextField } from "../../components"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../../models"
 import { color } from "../../theme"
@@ -12,6 +12,9 @@ import { TxKeyPath } from "../../i18n"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
+  flex: 1,
+}
+const CONTENT: ViewStyle = {
   flex: 1,
 }
 const PHOTO: ImageStyle = {
@@ -61,38 +64,41 @@ export const ReportScreen: FC<StackScreenProps<NavigatorParamList, "report">> = 
 
     return (
       <Screen style={ROOT} preset="scroll">
-        <Image resizeMode="contain" style={PHOTO} source={{ uri: `file://${report.photo}` }} />
-        {report.latLong && <Text style={POSITION}>{report.latLong}</Text>}
-        <TextField
-          labelTx="reportScreen.descriptionLabel"
-          inputStyle={TEXT_FIELD_INPUT}
-          multiline
-          value={report.description}
-          editable={report.status === ReportStatus.Pending}
-          scrollEnabled
-          placeholderTx="reportScreen.descriptionPlaceholder"
-          onChangeText={(v) => report.setDescription(v)}
-        />
-        {report.status === ReportStatus.Pending && (
-          <Button
-            tx="reportScreen.send"
-            style={!report.description && BUTTON_DISABLED}
-            disabled={!report.description}
-            onPress={() => report.upload()}
-          ></Button>
-        )}
-        {report.status !== ReportStatus.Pending && (
-          <Text style={STATUS} tx={`reportScreen.status.${report.status}` as TxKeyPath} />
-        )}
-        {report.loading && (
-          <View style={LOADING_CONTAINER}>
-            <ActivityIndicator
-              color={color.palette.offWhite}
-              size={"large"}
-              style={LOADING_SPINNER}
-            />
-          </View>
-        )}
+        <Header headerTx="reportScreen.report" leftIcon="back" />
+        <View style={CONTENT}>
+          <Image resizeMode="contain" style={PHOTO} source={{ uri: `file://${report.photo}` }} />
+          {report.latLong && <Text style={POSITION}>{report.latLong}</Text>}
+          <TextField
+            labelTx="reportScreen.descriptionLabel"
+            inputStyle={TEXT_FIELD_INPUT}
+            multiline
+            value={report.description}
+            editable={report.status === ReportStatus.Pending}
+            scrollEnabled
+            placeholderTx="reportScreen.descriptionPlaceholder"
+            onChangeText={(v) => report.setDescription(v)}
+          />
+          {report.status === ReportStatus.Pending && (
+            <Button
+              tx="reportScreen.send"
+              style={!report.description && BUTTON_DISABLED}
+              disabled={!report.description}
+              onPress={() => report.upload()}
+            ></Button>
+          )}
+          {report.status !== ReportStatus.Pending && (
+            <Text style={STATUS} tx={`reportScreen.status.${report.status}` as TxKeyPath} />
+          )}
+          {report.loading && (
+            <View style={LOADING_CONTAINER}>
+              <ActivityIndicator
+                color={color.palette.offWhite}
+                size={"large"}
+                style={LOADING_SPINNER}
+              />
+            </View>
+          )}
+        </View>
       </Screen>
     )
   },

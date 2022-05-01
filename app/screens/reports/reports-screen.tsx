@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite"
 import { View, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavigatorParamList } from "../../navigators"
-import { Report, Screen, Text } from "../../components"
+import { Header, Report, Screen, Text } from "../../components"
 import { color } from "../../theme"
 import { useStores } from "../../models"
 
@@ -25,7 +25,7 @@ export const ReportsScreen: FC<StackScreenProps<NavigatorParamList, "reports">> 
 
     return (
       <Screen style={ROOT} preset="scroll">
-        <Text preset="header" text="reports" />
+        <Header headerTx="mainMenuScreen.reports" leftIcon="back" />
         <View style={CONTAINER}>
           {reports.map((report) => (
             <Report

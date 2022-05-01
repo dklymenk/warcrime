@@ -1,4 +1,4 @@
-import * as Localization from "expo-localization"
+// import * as Localization from "expo-localization"
 import i18n from "i18n-js"
 import ru from "./ru.json"
 import uk from "./uk.json"
@@ -7,7 +7,9 @@ i18n.fallbacks = true
 i18n.translations = { ru, uk }
 i18n.defaultLocale = "uk"
 
-i18n.locale = Localization.locale || i18n.defaultLocale
+// TODO
+// i18n.locale = Localization.locale || i18n.defaultLocale
+i18n.locale = i18n.defaultLocale
 
 /**
  * Builds up valid keypaths for translations.

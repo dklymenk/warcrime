@@ -28,6 +28,7 @@
     "waitingForLocation": "в очікуванні локації..."
   },
   "reportScreen": {
+    "report": "Звіт",
     "descriptionLabel": "Опис",
     "descriptionPlaceholder": "Додайте опис до звіту...",
     "send": "ВІДПРАВИТИ",

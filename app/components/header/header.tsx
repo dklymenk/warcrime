@@ -6,6 +6,7 @@ import { Text } from "../text/text"
 import { Icon } from "../icon/icon"
 import { spacing } from "../../theme"
 import { translate } from "../../i18n/"
+import { useNavigation } from "@react-navigation/core"
 
 // static styles
 const ROOT: ViewStyle = {
@@ -36,11 +37,20 @@ export function Header(props: HeaderProps) {
     titleStyle,
   } = props
   const header = headerText || (headerTx && translate(headerTx)) || ""
+  const navigation = useNavigation()
 
   return (
     <View style={[ROOT, style]}>
       {leftIcon ? (
-        <Button preset="link" onPress={onLeftPress}>
+        <Button
+          preset="link"
+          onPress={
+            onLeftPress ??
+            (() => {
+              navigation.goBack()
+            })
+          }
+        >
           <Icon icon={leftIcon} />
         </Button>
       ) : (
