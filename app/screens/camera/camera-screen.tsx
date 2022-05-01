@@ -137,6 +137,23 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
 
     return (
       <Screen style={ROOT} preset="scroll">
+        {cameraPermission === "authorized" &&
+        // microphonePermission === "authorized" &&
+        locationPermission === PermissionsAndroid.RESULTS.GRANTED &&
+        device ? (
+          <View style={CAMERA_CONTAINER}>
+            <Camera ref={camera} style={FULL} device={device} isActive={true} photo={true} />
+            <Text style={[POSITION, position && POSITION_FOUND]}>
+              {position
+                ? `${position.coords.latitude}, ${position.coords.longitude}`
+                : translate("cameraScreen.waitingForLocation")}
+            </Text>
+            <Header style={HEADER} leftIcon="back" headerTx="mainMenuScreen.camera" />
+            <Button style={BUTTON(orientation)} onPress={takePicture} />
+          </View>
+        ) : (
+          <Header leftIcon="back" headerTx="mainMenuScreen.camera" />
+        )}
         {cameraPermission && cameraPermission !== "authorized" && (
           <>
             <Text tx={"cameraScreen.cameraPermissionRequired"} />
@@ -155,22 +172,6 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
             <Button tx={"cameraScreen.grant"} onPress={requestLocationPermission} />
           </>
         )}
-
-        {cameraPermission === "authorized" &&
-          // microphonePermission === "authorized" &&
-          locationPermission === PermissionsAndroid.RESULTS.GRANTED &&
-          device && (
-            <View style={CAMERA_CONTAINER}>
-              <Camera ref={camera} style={FULL} device={device} isActive={true} photo={true} />
-              <Text style={[POSITION, position && POSITION_FOUND]}>
-                {position
-                  ? `${position.coords.latitude}, ${position.coords.longitude}`
-                  : translate("cameraScreen.waitingForLocation")}
-              </Text>
-              <Header style={HEADER} leftIcon="back" headerTx="mainMenuScreen.camera" />
-              <Button style={BUTTON(orientation)} onPress={takePicture} />
-            </View>
-          )}
       </Screen>
     )
   },
