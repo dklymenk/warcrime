@@ -49,7 +49,7 @@ const BUTTON = (orientation: "PORTRAIT" | "LANDSCAPE"): ViewStyle => ({
 export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = observer(
   function CameraScreen() {
     const [cameraPermission, setCameraPermission] = useState<CameraPermissionStatus>()
-    const [microphonePermission, setMicrophonePermission] = useState<CameraPermissionStatus>()
+    // const [microphonePermission, setMicrophonePermission] = useState<CameraPermissionStatus>()
     const [locationPermission, setLocationPermission] = useState<
       PermissionState | "never_ask_again"
     >()
@@ -57,7 +57,7 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
 
     useEffect(() => {
       Camera.getCameraPermissionStatus().then(setCameraPermission)
-      Camera.getMicrophonePermissionStatus().then(setMicrophonePermission)
+      // Camera.getMicrophonePermissionStatus().then(setMicrophonePermission)
       PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION).then((s) =>
         setLocationPermission(
           s ? PermissionsAndroid.RESULTS.GRANTED : PermissionsAndroid.RESULTS.DENIED,
@@ -65,14 +65,14 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
       )
     }, [])
 
-    const requestMicrophonePermission = useCallback(async () => {
-      // console.log("Requesting microphone permission...")
-      const permission = await Camera.requestMicrophonePermission()
-      // console.log(`Microphone permission status: ${permission}`)
+    // const requestMicrophonePermission = useCallback(async () => {
+    //   // console.log("Requesting microphone permission...")
+    //   const permission = await Camera.requestMicrophonePermission()
+    //   // console.log(`Microphone permission status: ${permission}`)
 
-      if (permission === "denied") await Linking.openSettings()
-      setMicrophonePermission(permission)
-    }, [])
+    //   if (permission === "denied") await Linking.openSettings()
+    //   setMicrophonePermission(permission)
+    // }, [])
 
     const requestCameraPermission = useCallback(async () => {
       // console.log("Requesting camera permission...")
@@ -143,12 +143,12 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
             <Button tx={"cameraScreen.grant"} onPress={requestCameraPermission} />
           </>
         )}
-        {microphonePermission && microphonePermission !== "authorized" && (
-          <>
-            <Text tx={"cameraScreen.microphonePermissionRequired"} />
-            <Button tx={"cameraScreen.grant"} onPress={requestMicrophonePermission} />
-          </>
-        )}
+        {/* {microphonePermission && microphonePermission !== "authorized" && ( */}
+        {/*   <> */}
+        {/*     <Text tx={"cameraScreen.microphonePermissionRequired"} /> */}
+        {/*     <Button tx={"cameraScreen.grant"} onPress={requestMicrophonePermission} /> */}
+        {/*   </> */}
+        {/* )} */}
         {locationPermission && locationPermission !== PermissionsAndroid.RESULTS.GRANTED && (
           <>
             <Text tx={"cameraScreen.locationPermissionRequired"} />
@@ -157,7 +157,7 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
         )}
 
         {cameraPermission === "authorized" &&
-          microphonePermission === "authorized" &&
+          // microphonePermission === "authorized" &&
           locationPermission === PermissionsAndroid.RESULTS.GRANTED &&
           device && (
             <View style={CAMERA_CONTAINER}>
