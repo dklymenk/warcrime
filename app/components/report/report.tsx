@@ -9,7 +9,7 @@ import {
   GestureResponderEvent,
 } from "react-native"
 import { observer } from "mobx-react-lite"
-import { Report as ReportModel } from "../../models"
+import { Report as ReportModel, ReportStatus } from "../../models"
 import { color, spacing } from "../../theme"
 
 const CONTAINER: ViewStyle = {
@@ -24,7 +24,13 @@ const IMAGE: ImageStyle = {
   height: 64,
   borderRadius: 8,
 }
-const STATUS_CIRCLE: ViewStyle = {
+const STATUS_COLORS: Record<ReportStatus, string> = {
+  UPLOADED: color.palette.offWhite,
+  PENDING: color.palette.orange,
+  ACCEPTED: color.palette.deepPurple,
+  REJECTED: color.palette.angry,
+}
+const STATUS_CIRCLE = (status: ReportStatus): ViewStyle => ({
   position: "absolute",
   bottom: 4,
   right: 4,
@@ -33,8 +39,8 @@ const STATUS_CIRCLE: ViewStyle = {
   borderRadius: 50,
   borderColor: color.palette.black,
   borderWidth: 1,
-  backgroundColor: color.palette.orange,
-}
+  backgroundColor: STATUS_COLORS[status],
+})
 
 export interface ReportProps {
   /**
@@ -59,7 +65,7 @@ export const Report = observer(function Report(props: ReportProps) {
   return (
     <Pressable onPress={onPress} style={styles}>
       <Image style={IMAGE} key={report.id} source={source} />
-      <View style={STATUS_CIRCLE} />
+      <View style={STATUS_CIRCLE(report.status)} />
     </Pressable>
   )
 })
