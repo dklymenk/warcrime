@@ -153,7 +153,6 @@ export class Api {
     const response: ApiResponse<any> = await this.apisauce.post("/reports", {
       id,
       description,
-      status: ReportStatus.Uploaded,
       photo,
       latLong,
       userId,

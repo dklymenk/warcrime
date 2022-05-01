@@ -3,11 +3,12 @@ import { observer } from "mobx-react-lite"
 import { ViewStyle, Image, ImageStyle, TextStyle, ActivityIndicator, View } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavigatorParamList } from "../../navigators"
-import { Button, Report, Screen, Text, TextField } from "../../components"
+import { Button, Screen, Text, TextField } from "../../components"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../../models"
 import { color } from "../../theme"
 import { ReportStatus, useStores } from "../../models"
+import { TxKeyPath } from "../../i18n"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
@@ -22,6 +23,12 @@ const POSITION: TextStyle = {
   position: "absolute",
   top: 8,
   right: 8,
+  color: color.palette.offWhite,
+}
+const STATUS: TextStyle = {
+  position: "absolute",
+  top: 8,
+  left: 8,
   color: color.palette.offWhite,
 }
 const TEXT_FIELD_INPUT: ViewStyle = {
@@ -73,6 +80,9 @@ export const ReportScreen: FC<StackScreenProps<NavigatorParamList, "report">> = 
             disabled={!report.description}
             onPress={() => report.upload()}
           ></Button>
+        )}
+        {report.status !== ReportStatus.Pending && (
+          <Text style={STATUS} tx={`reportScreen.status.${report.status}` as TxKeyPath} />
         )}
         {report.loading && (
           <View style={LOADING_CONTAINER}>
