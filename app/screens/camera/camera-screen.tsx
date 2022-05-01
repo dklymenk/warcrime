@@ -5,36 +5,45 @@ import Geolocation from "react-native-geolocation-service"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavigatorParamList } from "../../navigators"
 import { Button, Header, Screen, Text } from "../../components"
-import { color } from "../../theme"
+import { color, spacing } from "../../theme"
 import { Camera, CameraPermissionStatus, useCameraDevices } from "react-native-vision-camera"
 import { ReportStatus, useStores } from "../../models"
 import "react-native-get-random-values"
 import { v4 as uuidv4 } from "uuid"
 import { translate } from "../../i18n"
+import { useOrientation } from "../../utils/useOrientation"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
   flex: 1,
 }
 const FULL: ViewStyle = { flex: 1 }
+const HEADER: ViewStyle = {
+  opacity: 0.5,
+  position: "absolute",
+  backgroundColor: color.palette.black,
+  paddingTop: spacing[1],
+  paddingBottom: spacing[1],
+}
 const CAMERA_CONTAINER: ViewStyle = { flex: 1 }
 const POSITION: TextStyle = {
   position: "absolute",
-  top: 8,
+  top: 32,
   right: 8,
   color: color.palette.angry,
 }
 const POSITION_FOUND: TextStyle = {
   color: color.palette.offWhite,
 }
-const BUTTON: ViewStyle = {
+const BUTTON = (orientation: "PORTRAIT" | "LANDSCAPE"): ViewStyle => ({
   position: "absolute",
   width: 64,
   height: 64,
   borderRadius: 50,
-  bottom: 8,
-  alignSelf: "center",
-}
+  bottom: orientation === "PORTRAIT" ? 8 : "50%",
+  // transform: [{translateY: }],
+  alignSelf: orientation === "PORTRAIT" ? "center" : "flex-end",
+})
 
 export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = observer(
   function CameraScreen() {
@@ -123,9 +132,10 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
       })
     }
 
+    const orientation = useOrientation()
+
     return (
       <Screen style={ROOT} preset="scroll">
-        <Header leftIcon="back" headerTx="mainMenuScreen.camera" />
         {cameraPermission && cameraPermission !== "authorized" && (
           <>
             <Text tx={"cameraScreen.cameraPermissionRequired"} />
@@ -156,7 +166,8 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
                   ? `${position.coords.latitude}, ${position.coords.longitude}`
                   : translate("cameraScreen.waitingForLocation")}
               </Text>
-              <Button style={BUTTON} onPress={takePicture} />
+              <Header style={HEADER} leftIcon="back" headerTx="mainMenuScreen.camera" />
+              <Button style={BUTTON(orientation)} onPress={takePicture} />
             </View>
           )}
       </Screen>
