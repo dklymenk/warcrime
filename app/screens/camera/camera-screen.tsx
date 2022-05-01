@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { Linking, View, ViewStyle, PermissionsAndroid, TextStyle } from "react-native"
+import { Linking, View, ViewStyle, PermissionsAndroid, TextStyle, Dimensions } from "react-native"
 import Geolocation from "react-native-geolocation-service"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavigatorParamList } from "../../navigators"
@@ -40,7 +40,8 @@ const BUTTON = (orientation: "PORTRAIT" | "LANDSCAPE"): ViewStyle => ({
   width: 64,
   height: 64,
   borderRadius: 50,
-  bottom: orientation === "PORTRAIT" ? 8 : "50%",
+  bottom: orientation === "PORTRAIT" ? 8 : Dimensions.get("screen").height / 2 - 32,
+  right: orientation === "LANDSCAPE" ? 8 : null,
   // transform: [{translateY: }],
   alignSelf: orientation === "PORTRAIT" ? "center" : "flex-end",
 })
