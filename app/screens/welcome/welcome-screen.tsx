@@ -48,9 +48,10 @@ const TITLE: TextStyle = {
 const ORG_LOGO: ImageStyle = {
   alignSelf: "center",
   marginVertical: spacing[5],
-  maxWidth: "50%",
-  width: 343,
-  height: 230,
+  flex: 1,
+  // maxWidth: "50%",
+  width: 200,
+  height: 300,
 }
 const CONTENT: TextStyle = {
   ...TEXT,
