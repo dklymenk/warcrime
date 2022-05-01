@@ -1,5 +1,4 @@
-import { flow, getRoot, Instance, SnapshotOut, types } from "mobx-state-tree"
-import { Api } from "../../services/api"
+import { flow, getRoot, Instance, SnapshotOut, toGenerator, types } from "mobx-state-tree"
 import { withEnvironment } from "../extensions/with-environment"
 import { RootStore } from "../root-store/root-store"
 
@@ -32,18 +31,27 @@ export const ReportModel = types
   .actions((self) => ({
     upload: flow(function* upload(): any {
       self.loading = true
+      const rootStore = getRoot<RootStore>(self)
       try {
-        const root = getRoot<RootStore>(self)
-        const { id, description, photo, status, latLong } = self
-        console.log({ id, description, photo, status, latLong, userId: root.user.id })
-        // yield new Promise<void>((resolve) => setTimeout(() => resolve(), 1000))
-        const api = self.environment.api
-        const result = yield api.uploadFile(photo)
-        console.log(result)
+        const uploadFileResult = yield* toGenerator(self.environment.api.uploadFile(self.photo))
+
+        if (uploadFileResult.kind === "ok") {
+          const result = yield* toGenerator(
+            self.environment.api.postReport(
+              self,
+              uploadFileResult.upload.filename,
+              rootStore.user.id,
+            ),
+          )
+          if (result.kind === "ok") {
+            self.status = result.report.status
+          }
+        } else {
+          __DEV__ && console.tron.log(uploadFileResult.kind)
+        }
       } catch (error) {
         console.log({ error })
       }
-
       self.loading = false
     }),
   }))

@@ -2,6 +2,7 @@ import { ApisauceInstance, create, ApiResponse } from "apisauce"
 import { getGeneralApiProblem } from "./api-problem"
 import { ApiConfig, DEFAULT_API_CONFIG } from "./api-config"
 import * as Types from "./api.types"
+import { ReportSnapshot, ReportStatus } from "../../models"
 
 /**
  * Manages all requests to the API.
@@ -122,8 +123,52 @@ export class Api {
 
     // transform the data into the format we are expecting
     try {
-      const filename: string = response.data.filename
+      const filename: string = this.config.url + "/files/" + response.data.filename
       return { kind: "ok", upload: { filename } }
+    } catch {
+      return { kind: "bad-data" }
+    }
+  }
+
+  /**
+   * Post a report
+   */
+
+  async postReport(
+    report: ReportSnapshot,
+    photo: string,
+    userId: string,
+  ): Promise<Types.PostReportResult> {
+    const { id, description, latLong } = report
+    console.log({
+      id,
+      description,
+      status: ReportStatus.Uploaded,
+      photo,
+      latLong,
+      userId,
+    })
+
+    // make the api call
+    const response: ApiResponse<any> = await this.apisauce.post("/reports", {
+      id,
+      description,
+      status: ReportStatus.Uploaded,
+      photo,
+      latLong,
+      userId,
+    })
+
+    // the typical ways to die when calling an api
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
+
+    // transform the data into the format we are expecting
+    try {
+      const status: ReportStatus = response.data.status
+      return { kind: "ok", report: { status } }
     } catch {
       return { kind: "bad-data" }
     }

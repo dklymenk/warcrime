@@ -3,11 +3,11 @@ import { observer } from "mobx-react-lite"
 import { ViewStyle, Image, ImageStyle, TextStyle, ActivityIndicator, View } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavigatorParamList } from "../../navigators"
-import { Button, Screen, Text, TextField } from "../../components"
+import { Button, Report, Screen, Text, TextField } from "../../components"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../../models"
 import { color } from "../../theme"
-import { useStores } from "../../models"
+import { ReportStatus, useStores } from "../../models"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
@@ -61,16 +61,19 @@ export const ReportScreen: FC<StackScreenProps<NavigatorParamList, "report">> = 
           inputStyle={TEXT_FIELD_INPUT}
           multiline
           value={report.description}
+          editable={report.status === ReportStatus.Pending}
           scrollEnabled
           placeholderTx="reportScreen.descriptionPlaceholder"
           onChangeText={(v) => report.setDescription(v)}
         />
-        <Button
-          tx="reportScreen.send"
-          style={!report.description && BUTTON_DISABLED}
-          disabled={!report.description}
-          onPress={() => report.upload()}
-        ></Button>
+        {report.status === ReportStatus.Pending && (
+          <Button
+            tx="reportScreen.send"
+            style={!report.description && BUTTON_DISABLED}
+            disabled={!report.description}
+            onPress={() => report.upload()}
+          ></Button>
+        )}
         {report.loading && (
           <View style={LOADING_CONTAINER}>
             <ActivityIndicator
