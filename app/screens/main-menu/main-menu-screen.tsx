@@ -42,13 +42,13 @@ export const MainMenuScreen: FC<StackScreenProps<NavigatorParamList, "mainMenu">
           tx="mainMenuScreen.camera"
           onPress={() => navigation.navigate("camera")}
         />
-        <Button
-          testID="gallery"
-          style={CONTINUE}
-          textStyle={CONTINUE_TEXT}
-          tx="mainMenuScreen.gallery"
-          // onPress={nextScreen}
-        />
+        {/* <Button */}
+        {/*   testID="gallery" */}
+        {/*   style={CONTINUE} */}
+        {/*   textStyle={CONTINUE_TEXT} */}
+        {/*   tx="mainMenuScreen.gallery" */}
+        {/*   // onPress={nextScreen} */}
+        {/* /> */}
         <Button
           testID="camera"
           style={CONTINUE}
