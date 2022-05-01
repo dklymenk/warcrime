@@ -113,9 +113,7 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
 
     const camera = useRef<Camera>(null)
     const takePicture = async () => {
-      const photo = await camera.current.takePhoto({
-        flash: "on",
-      })
+      const photo = await camera.current.takePhoto()
 
       reportStore.addReport({
         id: uuidv4(),
