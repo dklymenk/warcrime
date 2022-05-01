@@ -12,6 +12,8 @@ import {
 } from "../../components"
 import { color, spacing, typography } from "../../theme"
 import { NavigatorParamList } from "../../navigators"
+import Autolink from "react-native-autolink"
+import { translate } from "../../i18n/translate"
 
 const orgLogo = require("./org.png")
 
@@ -60,6 +62,10 @@ const CONTENT: TextStyle = {
   lineHeight: 22,
   marginBottom: spacing[5],
 }
+const LINK: TextStyle = {
+  color: "#8040FF",
+  textDecorationLine: "underline",
+}
 const CONTINUE: ViewStyle = {
   paddingVertical: spacing[4],
   paddingHorizontal: spacing[4],
@@ -88,7 +94,19 @@ export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> 
           <Header headerTx="welcomeScreen.org" style={HEADER} titleStyle={HEADER_TITLE} />
           <Text style={TITLE} preset="header" tx="welcomeScreen.appName" />
           <Image source={orgLogo} style={ORG_LOGO} />
-          <Text style={CONTENT} tx="welcomeScreen.intro" />
+          <Autolink
+            textProps={{ style: CONTENT }}
+            linkStyle={LINK}
+            phone
+            matchers={[
+              {
+                pattern: /@([^[_]\w+)/g,
+                style: LINK,
+                getLinkUrl: (replacerArgs) => `https://t.me/${replacerArgs[1]}`,
+              },
+            ]}
+            text={translate("welcomeScreen.intro")}
+          />
           <Text style={CONTENT} tx="welcomeScreen.instructions" />
         </Screen>
         <SafeAreaView style={FOOTER}>
