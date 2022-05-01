@@ -49,9 +49,9 @@ const LOADING_CONTAINER: ViewStyle = {
   opacity: 0.9,
   backgroundColor: color.palette.black,
 }
-const BUTTON_DISABLED: ViewStyle = {
-  backgroundColor: color.palette.lightGrey,
-}
+// const BUTTON_DISABLED: ViewStyle = {
+//   backgroundColor: color.palette.lightGrey,
+// }
 
 export const ReportScreen: FC<StackScreenProps<NavigatorParamList, "report">> = observer(
   function ReportScreen({ route }) {
@@ -81,8 +81,8 @@ export const ReportScreen: FC<StackScreenProps<NavigatorParamList, "report">> = 
           {report.status === ReportStatus.Pending && (
             <Button
               tx="reportScreen.send"
-              style={!report.description && BUTTON_DISABLED}
-              disabled={!report.description}
+              // style={!report.description && BUTTON_DISABLED}
+              // disabled={!report.description}
               onPress={() => report.upload()}
             ></Button>
           )}

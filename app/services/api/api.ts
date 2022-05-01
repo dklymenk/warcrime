@@ -140,19 +140,11 @@ export class Api {
     userId: string,
   ): Promise<Types.PostReportResult> {
     const { id, description, latLong } = report
-    console.log({
-      id,
-      description,
-      status: ReportStatus.Uploaded,
-      photo,
-      latLong,
-      userId,
-    })
 
     // make the api call
     const response: ApiResponse<any> = await this.apisauce.post("/reports", {
       id,
-      description,
+      description: description || "-",
       photo,
       latLong,
       userId,
