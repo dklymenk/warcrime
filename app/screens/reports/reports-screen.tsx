@@ -1,12 +1,13 @@
 import React, { FC } from "react"
 import { observer } from "mobx-react-lite"
-import { View, ViewStyle } from "react-native"
+import { ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavigatorParamList } from "../../navigators"
 import { Header, Report, Screen } from "../../components"
 import { color } from "../../theme"
 import { useStores } from "../../models"
 import { FlatGrid } from "react-native-super-grid"
+import { castToSnapshot } from "mobx-state-tree"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
@@ -24,12 +25,12 @@ export const ReportsScreen: FC<StackScreenProps<NavigatorParamList, "reports">> 
         <Header headerTx="mainMenuScreen.reports" leftIcon="back" />
         <FlatGrid
           itemDimension={80}
-          data={reports}
+          data={castToSnapshot(reports)}
           renderItem={({ item }) => (
             <Report
               onPress={() => navigation.navigate("report", { id: item.id })}
               key={item.id}
-              report={item}
+              report={castToSnapshot(item)}
             />
           )}
         />

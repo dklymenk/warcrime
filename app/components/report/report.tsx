@@ -9,7 +9,7 @@ import {
   GestureResponderEvent,
 } from "react-native"
 import { observer } from "mobx-react-lite"
-import { Report as ReportModel, ReportStatus } from "../../models"
+import { ReportSnapshot, ReportStatus } from "../../models"
 import { color, spacing } from "../../theme"
 
 const CONTAINER: ViewStyle = {
@@ -47,7 +47,7 @@ export interface ReportProps {
    * An optional style override useful for padding & margin.
    */
   style?: StyleProp<ViewStyle>
-  report: ReportModel
+  report: ReportSnapshot
   onPress?: (event: GestureResponderEvent) => void
 }
 
