@@ -6,15 +6,11 @@ import { NavigatorParamList } from "../../navigators"
 import { Header, Report, Screen } from "../../components"
 import { color } from "../../theme"
 import { useStores } from "../../models"
+import { FlatGrid } from "react-native-super-grid"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
   flex: 1,
-}
-
-const CONTAINER: ViewStyle = {
-  flexDirection: "row",
-  flexWrap: "wrap",
 }
 
 export const ReportsScreen: FC<StackScreenProps<NavigatorParamList, "reports">> = observer(
@@ -24,17 +20,19 @@ export const ReportsScreen: FC<StackScreenProps<NavigatorParamList, "reports">> 
     const { reports } = reportStore
 
     return (
-      <Screen style={ROOT} preset="scroll">
+      <Screen style={ROOT} preset="fixed">
         <Header headerTx="mainMenuScreen.reports" leftIcon="back" />
-        <View style={CONTAINER}>
-          {reports.map((report) => (
+        <FlatGrid
+          itemDimension={80}
+          data={reports}
+          renderItem={({ item }) => (
             <Report
-              onPress={() => navigation.navigate("report", { id: report.id })}
-              key={report.id}
-              report={report}
+              onPress={() => navigation.navigate("report", { id: item.id })}
+              key={item.id}
+              report={item}
             />
-          ))}
-        </View>
+          )}
+        />
       </Screen>
     )
   },

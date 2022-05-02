@@ -52,6 +52,7 @@
     "react-native-keychain": "6.2.0",
     "react-native-safe-area-context": "3.1.8",
     "react-native-screens": "3.8.0",
+    "react-native-super-grid": "^4.4.0",
     "react-native-vision-camera": "^2.13.2",
     "reactotron-mst": "3.1.4",
     "reactotron-react-js": "^3.3.7",
