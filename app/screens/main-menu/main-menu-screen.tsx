@@ -1,10 +1,13 @@
 import React, { FC } from "react"
 import { observer } from "mobx-react-lite"
-import { TextStyle, ViewStyle } from "react-native"
+import { TextStyle, ToastAndroid, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavigatorParamList } from "../../navigators"
 import { Button, Header, Screen } from "../../components"
 import { color, spacing, typography } from "../../theme"
+import { launchImageLibrary } from "react-native-image-picker"
+import { translate } from "../../i18n"
+import { useStores } from "../../models"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
@@ -32,6 +35,19 @@ const CONTINUE_TEXT: TextStyle = {
 
 export const MainMenuScreen: FC<StackScreenProps<NavigatorParamList, "mainMenu">> = observer(
   function MainMenuScreen({ navigation }) {
+    const { reportStore } = useStores()
+
+    const onGalleryPress = async () => {
+      const result = await launchImageLibrary({ mediaType: "photo" })
+      reportStore.addReport({
+        photo: result.assets[0].uri,
+      })
+      ToastAndroid.showWithGravity(
+        translate("mainMenuScreen.loadedFromGallery"),
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER,
+      )
+    }
     return (
       <Screen style={ROOT} preset="scroll">
         <Header headerTx="mainMenuScreen.mainMenu" leftIcon="back" />
@@ -42,13 +58,13 @@ export const MainMenuScreen: FC<StackScreenProps<NavigatorParamList, "mainMenu">
           tx="mainMenuScreen.camera"
           onPress={() => navigation.navigate("camera")}
         />
-        {/* <Button */}
-        {/*   testID="gallery" */}
-        {/*   style={CONTINUE} */}
-        {/*   textStyle={CONTINUE_TEXT} */}
-        {/*   tx="mainMenuScreen.gallery" */}
-        {/*   // onPress={nextScreen} */}
-        {/* /> */}
+        <Button
+          testID="gallery"
+          style={CONTINUE}
+          textStyle={CONTINUE_TEXT}
+          tx="mainMenuScreen.gallery"
+          onPress={onGalleryPress}
+        />
         <Button
           testID="camera"
           style={CONTINUE}

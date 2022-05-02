@@ -18,6 +18,7 @@
     "mainMenu": "ГОЛОВНЕ МЕНЮ",
     "camera": "КАМЕРА",
     "gallery": "ГАЛЕРЕЯ",
+    "loadedFromGallery": "ЗОБРАЖЕННЯ ДОДАНО ЗО ЗВІТУ",
     "reports": "МОЇ ЗВІТИ"
   },
   "cameraScreen": {

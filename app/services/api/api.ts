@@ -108,7 +108,7 @@ export class Api {
   async uploadFile(path: string): Promise<Types.UploadFileResult> {
     const form = new FormData()
     const fileName = path.split("/").pop()
-    form.append("file", { uri: `file:///${path}`, name: fileName, type: "image/jpg" } as any)
+    form.append("file", { uri: `file://${path}`, name: fileName, type: "image/jpg" } as any)
     const headers = {
       "Content-Type": "multipart/form-data",
     }

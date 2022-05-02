@@ -1,6 +1,8 @@
 import { flow, getRoot, Instance, SnapshotOut, toGenerator, types } from "mobx-state-tree"
 import { withEnvironment } from "../extensions/with-environment"
 import { RootStore } from "../root-store/root-store"
+import { v4 as uuidv4 } from "uuid"
+import "react-native-get-random-values"
 
 export enum ReportStatus {
   Pending = "PENDING",
@@ -16,10 +18,13 @@ export const ReportModel = types
   .model("Report")
   .extend(withEnvironment)
   .props({
-    id: types.identifier,
+    id: types.optional(types.identifier, uuidv4()),
     description: types.optional(types.string, ""),
     photo: types.string,
-    status: types.enumeration<ReportStatus>("ReportStatus", Object.values(ReportStatus)),
+    status: types.optional(
+      types.enumeration<ReportStatus>("ReportStatus", Object.values(ReportStatus)),
+      ReportStatus.Pending,
+    ),
     latLong: types.maybe(types.string),
     loading: types.optional(types.boolean, false),
   })
