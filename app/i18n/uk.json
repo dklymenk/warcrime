@@ -25,7 +25,8 @@
     "microphonePermissionRequired": "Для цієї функції потрібен доступ до мікрофона",
     "locationPermissionRequired": "Для цієї функції потрібен доступ до місцезнаходження",
     "grant": "НАДАТИ",
-    "waitingForLocation": "в очікуванні локації..."
+    "waitingForLocation": "в очікуванні локації...",
+    "photoTaken": "ФОТО ЗРОБЛЕНО"
   },
   "reportScreen": {
     "report": "Звіт",
