@@ -10,18 +10,15 @@ import {
 } from "react-native"
 import { observer } from "mobx-react-lite"
 import { ReportSnapshot, ReportStatus } from "../../models"
-import { color, spacing } from "../../theme"
+import { color } from "../../theme"
 
 const CONTAINER: ViewStyle = {
-  width: 64,
-  height: 64,
-  justifyContent: "center",
-  margin: spacing[2],
+  aspectRatio: 1,
+  flex: 1,
 }
 
 const IMAGE: ImageStyle = {
-  width: 64,
-  height: 64,
+  flex: 1,
   borderRadius: 8,
 }
 const STATUS_COLORS: Record<ReportStatus, string> = {

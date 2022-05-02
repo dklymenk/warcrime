@@ -4,7 +4,7 @@ import { ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavigatorParamList } from "../../navigators"
 import { Header, Report, Screen } from "../../components"
-import { color } from "../../theme"
+import { color, spacing } from "../../theme"
 import { useStores } from "../../models"
 import { FlatGrid } from "react-native-super-grid"
 import { castToSnapshot } from "mobx-state-tree"
@@ -24,7 +24,8 @@ export const ReportsScreen: FC<StackScreenProps<NavigatorParamList, "reports">> 
       <Screen style={ROOT} preset="fixed">
         <Header headerTx="mainMenuScreen.reports" leftIcon="back" />
         <FlatGrid
-          itemDimension={80}
+          itemDimension={64}
+          spacing={spacing[2]}
           data={castToSnapshot(reports)}
           renderItem={({ item }) => (
             <Report
