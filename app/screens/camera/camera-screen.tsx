@@ -1,14 +1,6 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from "react"
 import { observer } from "mobx-react-lite"
-import {
-  Linking,
-  View,
-  ViewStyle,
-  PermissionsAndroid,
-  TextStyle,
-  Dimensions,
-  ToastAndroid,
-} from "react-native"
+import { Linking, View, ViewStyle, PermissionsAndroid, TextStyle, Dimensions } from "react-native"
 import Geolocation from "react-native-geolocation-service"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavigatorParamList } from "../../navigators"
@@ -20,6 +12,7 @@ import "react-native-get-random-values"
 import { v4 as uuidv4 } from "uuid"
 import { translate } from "../../i18n"
 import { useOrientation } from "../../utils/useOrientation"
+import toast from "../../utils/toast"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
@@ -139,11 +132,7 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
         status: ReportStatus.Pending,
         latLong: position ? `${position.coords.latitude},${position.coords.longitude}` : null,
       })
-      ToastAndroid.showWithGravity(
-        translate("cameraScreen.photoTaken"),
-        ToastAndroid.SHORT,
-        ToastAndroid.CENTER,
-      )
+      toast("cameraScreen.photoTaken")
     }
 
     const orientation = useOrientation()

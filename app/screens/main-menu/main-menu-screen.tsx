@@ -1,13 +1,13 @@
 import React, { FC } from "react"
 import { observer } from "mobx-react-lite"
-import { TextStyle, ToastAndroid, ViewStyle } from "react-native"
+import { TextStyle, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavigatorParamList } from "../../navigators"
 import { Button, Header, Screen } from "../../components"
 import { color, spacing, typography } from "../../theme"
 import { launchImageLibrary } from "react-native-image-picker"
-import { translate } from "../../i18n"
 import { useStores } from "../../models"
+import toast from "../../utils/toast"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
@@ -42,11 +42,7 @@ export const MainMenuScreen: FC<StackScreenProps<NavigatorParamList, "mainMenu">
       reportStore.addReport({
         photo: result.assets[0].uri,
       })
-      ToastAndroid.showWithGravity(
-        translate("mainMenuScreen.loadedFromGallery"),
-        ToastAndroid.SHORT,
-        ToastAndroid.CENTER,
-      )
+      toast("mainMenuScreen.loadedFromGallery")
     }
     return (
       <Screen style={ROOT} preset="scroll">
