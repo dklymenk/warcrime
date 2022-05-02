@@ -108,6 +108,7 @@ export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> 
             text={translate("welcomeScreen.intro")}
           />
           <Text style={CONTENT} tx="welcomeScreen.instructions" />
+          <Text style={CONTENT} tx="welcomeScreen.legal" />
         </Screen>
         <SafeAreaView style={FOOTER}>
           <View style={FOOTER_CONTENT}>
