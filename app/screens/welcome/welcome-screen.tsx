@@ -95,7 +95,7 @@ export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> 
           <Text style={TITLE} preset="header" tx="welcomeScreen.appName" />
           <Image source={orgLogo} style={ORG_LOGO} />
           <Autolink
-            textProps={{ style: CONTENT }}
+            style={CONTENT}
             linkStyle={LINK}
             phone
             matchers={[
