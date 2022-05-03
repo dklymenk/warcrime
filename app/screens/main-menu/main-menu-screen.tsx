@@ -38,11 +38,15 @@ export const MainMenuScreen: FC<StackScreenProps<NavigatorParamList, "mainMenu">
     const { reportStore } = useStores()
 
     const onGalleryPress = async () => {
-      const result = await launchImageLibrary({ mediaType: "photo" })
-      reportStore.addReport({
-        photo: result.assets[0].uri,
-      })
-      toast("mainMenuScreen.loadedFromGallery")
+      try {
+        const result = await launchImageLibrary({ mediaType: "photo" })
+        reportStore.addReport({
+          photo: result.assets[0].uri,
+        })
+        toast("mainMenuScreen.loadedFromGallery")
+      } catch (error) {
+        console.tron.error(error.message, null)
+      }
     }
     return (
       <Screen style={ROOT} preset="scroll">
