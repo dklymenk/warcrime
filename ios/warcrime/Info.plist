@@ -35,14 +35,14 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(PRODUCT_NAME) потребує доступ до вашої бібліотеки фотографій.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>$(PRODUCT_NAME) потребує доступ до камери.</string>
+	<string>для зйомки відео та фото</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>$(PRODUCT_NAME) потребує доступ до вашого місцезнаходження під час використання програми.</string>
+	<string>для прикріплення розташування до створених медіафайлів</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>$(PRODUCT_NAME) потребує доступ до вашого мікрофона.</string>
+	<string>для зйомки відео зі звуком</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>для прикріплення медіафайлів до звіту</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
