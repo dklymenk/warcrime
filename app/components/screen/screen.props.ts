@@ -1,5 +1,5 @@
 import React from "react"
-import { StyleProp, ViewStyle } from "react-native"
+import { ViewStyle } from "react-native"
 import { KeyboardOffsets, ScreenPresets } from "./screen.presets"
 
 export interface ScreenProps {
@@ -11,7 +11,7 @@ export interface ScreenProps {
   /**
    * An optional style override useful for padding & margin.
    */
-  style?: StyleProp<ViewStyle>
+  style?: ViewStyle
 
   /**
    * One of the different types of presets.
