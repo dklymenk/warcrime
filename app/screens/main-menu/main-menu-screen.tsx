@@ -7,7 +7,7 @@ import { Button, Header, Screen } from "../../components"
 import { color, spacing, typography } from "../../theme"
 import { launchImageLibrary } from "react-native-image-picker"
 import { useStores } from "../../models"
-import toast from "../../utils/toast"
+import { toast } from "../../utils/toast"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,

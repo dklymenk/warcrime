@@ -13,7 +13,7 @@ import "react-native-get-random-values"
 import { v4 as uuidv4 } from "uuid"
 import { translate } from "../../i18n"
 import { useOrientation } from "../../utils/useOrientation"
-import toast from "../../utils/toast"
+import { toast } from "../../utils/toast"
 import { Platform } from "expo-modules-core"
 
 const ROOT: ViewStyle = {
