@@ -1,6 +1,7 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { Linking, View, ViewStyle, PermissionsAndroid, TextStyle, Dimensions } from "react-native"
+import { Linking, View, ViewStyle, TextStyle, Dimensions } from "react-native"
+import { PERMISSIONS, RESULTS, check, request } from "react-native-permissions"
 import Geolocation from "react-native-geolocation-service"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavigatorParamList } from "../../navigators"
@@ -13,6 +14,7 @@ import { v4 as uuidv4 } from "uuid"
 import { translate } from "../../i18n"
 import { useOrientation } from "../../utils/useOrientation"
 import toast from "../../utils/toast"
+import { Platform } from "expo-modules-core"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
@@ -47,23 +49,25 @@ const BUTTON = (orientation: "PORTRAIT" | "LANDSCAPE"): ViewStyle => ({
   alignSelf: orientation === "PORTRAIT" ? "center" : "flex-end",
 })
 
+type ValueOf<T> = T[keyof T]
+
 export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = observer(
   function CameraScreen() {
     const [cameraPermission, setCameraPermission] = useState<CameraPermissionStatus>()
     // const [microphonePermission, setMicrophonePermission] = useState<CameraPermissionStatus>()
-    const [locationPermission, setLocationPermission] = useState<
-      PermissionState | "never_ask_again"
-    >()
+    const [locationPermission, setLocationPermission] = useState<ValueOf<typeof RESULTS>>()
     const [position, setPosition] = useState<Geolocation.GeoPosition>()
 
     useEffect(() => {
       Camera.getCameraPermissionStatus().then(setCameraPermission)
       // Camera.getMicrophonePermissionStatus().then(setMicrophonePermission)
-      PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION).then((s) =>
-        setLocationPermission(
-          s ? PermissionsAndroid.RESULTS.GRANTED : PermissionsAndroid.RESULTS.DENIED,
-        ),
-      )
+      check(
+        Platform.OS === "android"
+          ? PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION
+          : PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
+      ).then((r) => {
+        setLocationPermission(r)
+      })
     }, [])
 
     // const requestMicrophonePermission = useCallback(async () => {
@@ -86,17 +90,19 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
 
     const requestLocationPermission = useCallback(async () => {
       // console.log("Requesting location permission...")
-      const permission = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      const result = await request(
+        Platform.OS === "android"
+          ? PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION
+          : PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
       )
       // console.log(`Location permission status: ${permission}`)
 
-      if (permission !== PermissionsAndroid.RESULTS.GRANTED) await Linking.openSettings()
-      setLocationPermission(permission)
+      if (result !== RESULTS.GRANTED) await Linking.openSettings()
+      setLocationPermission(result)
     }, [])
 
     useEffect(() => {
-      if (locationPermission !== PermissionsAndroid.RESULTS.GRANTED) {
+      if (locationPermission !== RESULTS.GRANTED) {
         return undefined
       }
       // console.log("Trying to get position")
@@ -141,7 +147,7 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
       <Screen style={ROOT} preset="scroll">
         {cameraPermission === "authorized" &&
         // microphonePermission === "authorized" &&
-        locationPermission === PermissionsAndroid.RESULTS.GRANTED &&
+        locationPermission === RESULTS.GRANTED &&
         device ? (
           <View style={CAMERA_CONTAINER}>
             <Camera ref={camera} style={FULL} device={device} isActive={true} photo={true} />
@@ -168,7 +174,7 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
         {/*     <Button tx={"cameraScreen.grant"} onPress={requestMicrophonePermission} /> */}
         {/*   </> */}
         {/* )} */}
-        {locationPermission && locationPermission !== PermissionsAndroid.RESULTS.GRANTED && (
+        {locationPermission && locationPermission !== RESULTS.GRANTED && (
           <>
             <Text tx={"cameraScreen.locationPermissionRequired"} />
             <Button tx={"cameraScreen.grant"} onPress={requestLocationPermission} />

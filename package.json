@@ -51,6 +51,7 @@
     "react-native-get-random-values": "^1.7.2",
     "react-native-image-picker": "^4.8.1",
     "react-native-keychain": "6.2.0",
+    "react-native-permissions": "^3.3.1",
     "react-native-safe-area-context": "3.1.8",
     "react-native-screens": "3.8.0",
     "react-native-super-grid": "^4.4.0",
