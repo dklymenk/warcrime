@@ -10,6 +10,10 @@
     "build:e2e": "detox build -c ios.sim.debug",
     "ci:test:e2e": "detox test -c ios.sim.release -l verbose --cleanup",
     "ci:build:e2e": "detox build -c ios.sim.release",
+    "e2e:android:test": "detox test -c android.emu.debug",
+    "e2e:android:build": "detox build -c android.emu.debug",
+    "e2e:android:test:ci": "detox test -c android.emu.release",
+    "e2e:android:build:ci": "detox build -c android.emu.release",
     "compile": "tsc --noEmit -p . --pretty",
     "format": "npm run format:js && npm run format:json && npm run format:md && npm run format:ts",
     "format:js": "prettier --write \"app/**/*.js\"",
@@ -118,6 +122,26 @@
   },
   "detox": {
     "test-runner": "jest",
+    "devices": {
+      "emulator": {
+        "type": "android.emulator",
+        "device": {
+          "avdName": "Pixel_4_API_28_AOSP"
+        }
+      }
+    },
+    "apps": {
+      "android.debug": {
+        "type": "android.apk",
+        "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
+        "build": "cd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && cd .."
+      },
+      "android.release": {
+        "type": "android.apk",
+        "binaryPath": "android/app/build/outputs/apk/release/app-release.apk",
+        "build": "cd android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release && cd .."
+      }
+    },
     "configurations": {
       "ios.sim.debug": {
         "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/warcrime.app",
@@ -136,6 +160,14 @@
           "name": "iPhone 13",
           "os": "iOS 15.4"
         }
+      },
+      "android.emu.debug": {
+        "device": "emulator",
+        "app": "android.debug"
+      },
+      "android.emu.release": {
+        "device": "emulator",
+        "app": "android.release"
       }
     }
   }
