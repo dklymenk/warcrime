@@ -43,4 +43,9 @@ export interface ScreenProps {
    * Only applies to scroll preset.
    */
   keyboardShouldPersistTaps?: "handled" | "always" | "never"
+
+  /**
+   * Used to locate this view in end-to-end tests.
+   */
+  testID?: string
 }

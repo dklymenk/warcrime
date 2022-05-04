@@ -49,7 +49,7 @@ export const MainMenuScreen: FC<StackScreenProps<NavigatorParamList, "mainMenu">
       }
     }
     return (
-      <Screen style={ROOT} preset="scroll">
+      <Screen testID="MainMenuScreen" style={ROOT} preset="scroll">
         <Header headerTx="mainMenuScreen.mainMenu" leftIcon="back" />
         <Button
           testID="camera"

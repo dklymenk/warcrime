@@ -25,6 +25,7 @@ function ScreenWithoutScrolling(props: ScreenProps) {
       style={[preset.outer, backgroundStyle]}
       behavior={isIos ? "padding" : undefined}
       keyboardVerticalOffset={offsets[props.keyboardOffset || "none"]}
+      testID={props.testID}
     >
       <StatusBar barStyle={props.statusBar || "light-content"} />
       <View style={[preset.inner, style, insetStyle]}>{props.children}</View>
@@ -50,6 +51,7 @@ function ScreenWithScrolling(props: ScreenProps) {
       style={[preset.outer, backgroundStyle]}
       behavior={isIos ? "padding" : undefined}
       keyboardVerticalOffset={offsets[props.keyboardOffset || "none"]}
+      testID={props.testID}
     >
       <StatusBar barStyle={props.statusBar || "light-content"} />
       <View style={[preset.outer, backgroundStyle, insetStyle]}>
