@@ -15,6 +15,7 @@ import { translate } from "../../i18n"
 import { useOrientation } from "../../utils/useOrientation"
 import { toast } from "../../utils/toast"
 import { Platform } from "expo-modules-core"
+import * as FileSystem from "expo-file-system"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
@@ -131,10 +132,16 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
     const camera = useRef<Camera>(null)
     const takePicture = async () => {
       const photo = await camera.current.takePhoto()
+      const id = uuidv4()
+      const uri = `${FileSystem.documentDirectory}${id}.jpg`
 
+      await FileSystem.copyAsync({
+        from: `file://${photo.path}`,
+        to: uri,
+      })
       reportStore.addReport({
-        id: uuidv4(),
-        photo: photo.path,
+        id,
+        photo: uri,
         status: ReportStatus.Pending,
         latLong: position ? `${position.coords.latitude},${position.coords.longitude}` : null,
       })
