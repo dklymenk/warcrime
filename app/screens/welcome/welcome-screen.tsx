@@ -62,6 +62,9 @@ const CONTENT: TextStyle = {
   lineHeight: 22,
   marginBottom: spacing[5],
 }
+const LEGAL: TextStyle = {
+  fontWeight: "bold",
+}
 const LINK: TextStyle = {
   color: "#8040FF",
   textDecorationLine: "underline",
@@ -108,7 +111,7 @@ export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> 
             text={translate("welcomeScreen.intro")}
           />
           <Text style={CONTENT} tx="welcomeScreen.instructions" />
-          <Text style={CONTENT} tx="welcomeScreen.legal" />
+          <Text style={[CONTENT, LEGAL]} tx="welcomeScreen.legal" />
         </Screen>
         <SafeAreaView style={FOOTER}>
           <View style={FOOTER_CONTENT}>
