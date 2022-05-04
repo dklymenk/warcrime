@@ -8,6 +8,7 @@ import { color, spacing, typography } from "../../theme"
 import { launchImageLibrary } from "react-native-image-picker"
 import { useStores } from "../../models"
 import { toast } from "../../utils/toast"
+import * as FileSystem from "expo-file-system"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
@@ -40,8 +41,19 @@ export const MainMenuScreen: FC<StackScreenProps<NavigatorParamList, "mainMenu">
     const onGalleryPress = async () => {
       try {
         const result = await launchImageLibrary({ mediaType: "photo" })
+        if (result.assets.length === 0) {
+          return
+        }
+
+        const asset = result.assets[0]
+        const uri = `${FileSystem.documentDirectory}${asset.fileName}`
+        await FileSystem.copyAsync({
+          from: asset.uri,
+          to: uri,
+        })
+
         reportStore.addReport({
-          photo: result.assets[0].uri,
+          photo: uri,
         })
         toast("mainMenuScreen.loadedFromGallery")
       } catch (error) {
