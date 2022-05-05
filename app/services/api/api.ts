@@ -3,6 +3,7 @@ import { getGeneralApiProblem } from "./api-problem"
 import { ApiConfig, DEFAULT_API_CONFIG } from "./api-config"
 import * as Types from "./api.types"
 import { ReportSnapshot, ReportStatus } from "../../models"
+import * as FileSystem from "expo-file-system"
 
 /**
  * Manages all requests to the API.
@@ -105,10 +106,10 @@ export class Api {
    * Uploads a single file
    */
 
-  async uploadFile(path: string): Promise<Types.UploadFileResult> {
+  async uploadFile(fileName: string): Promise<Types.UploadFileResult> {
     const form = new FormData()
-    const fileName = path.split("/").pop()
-    form.append("file", { uri: `file://${path}`, name: fileName, type: "image/jpg" } as any)
+    const uri = `${FileSystem.documentDirectory}${fileName}`
+    form.append("file", { uri, name: fileName, type: "image/jpg" } as any)
     const headers = {
       "Content-Type": "multipart/form-data",
     }
