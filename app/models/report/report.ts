@@ -18,7 +18,7 @@ export const ReportModel = types
   .model("Report")
   .extend(withEnvironment)
   .props({
-    id: types.optional(types.identifier, uuidv4()),
+    id: types.optional(types.identifier, () => uuidv4()),
     description: types.optional(types.string, ""),
     photo: types.string,
     status: types.optional(
