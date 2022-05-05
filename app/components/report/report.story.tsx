@@ -14,7 +14,7 @@ storiesOf("Report", module)
           style={{ backgroundColor: color.error }}
           report={{
             id: "id",
-            photo: "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
+            photo: "storybook.jpeg",
             description: null,
             status: ReportStatus.Pending,
             latLong: undefined,

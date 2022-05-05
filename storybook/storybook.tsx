@@ -1,6 +1,7 @@
 import React, { useEffect } from "react"
 import { getStorybookUI, configure } from "@storybook/react-native"
 import { initFonts } from "../app/theme/fonts"
+import * as FileSystem from "expo-file-system"
 
 declare let module
 
@@ -24,6 +25,10 @@ export function StorybookUIRoot() {
         const reactotron = new Reactotron.Reactotron()
         reactotron.setup()
       }
+      FileSystem.downloadAsync(
+        "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
+        FileSystem.documentDirectory + "storybook.jpeg",
+      )
     })()
   }, [])
 
