@@ -26,6 +26,7 @@
     "cameraPermissionRequired": "Для цієї функції потрібен доступ до камери",
     "microphonePermissionRequired": "Для цієї функції потрібен доступ до мікрофона",
     "locationPermissionRequired": "Для цієї функції потрібен доступ до місцезнаходження",
+    "galleryWritePermissionRequired": "Для цієї функції потрібен доступ на збереження фотографій у вашій галереї",
     "grant": "НАДАТИ",
     "waitingForLocation": "в очікуванні локації...",
     "photoTaken": "ФОТО ЗРОБЛЕНО"

@@ -16,6 +16,7 @@ import { useOrientation } from "../../utils/useOrientation"
 import { toast } from "../../utils/toast"
 import { Platform } from "expo-modules-core"
 import * as FileSystem from "expo-file-system"
+// import CameraRoll from "@react-native-community/cameraroll"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
@@ -57,6 +58,7 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
     const [cameraPermission, setCameraPermission] = useState<CameraPermissionStatus>()
     // const [microphonePermission, setMicrophonePermission] = useState<CameraPermissionStatus>()
     const [locationPermission, setLocationPermission] = useState<ValueOf<typeof RESULTS>>()
+    const [galleryWritePermission, setGalleryWritePermission] = useState<ValueOf<typeof RESULTS>>()
     const [position, setPosition] = useState<Geolocation.GeoPosition>()
 
     useEffect(() => {
@@ -68,6 +70,14 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
           : PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
       ).then((r) => {
         setLocationPermission(r)
+      })
+
+      check(
+        Platform.OS === "android"
+          ? PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE
+          : PERMISSIONS.IOS.PHOTO_LIBRARY_ADD_ONLY,
+      ).then((r) => {
+        setGalleryWritePermission(r)
       })
     }, [])
 
@@ -100,6 +110,19 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
 
       if (result !== RESULTS.GRANTED) await Linking.openSettings()
       setLocationPermission(result)
+    }, [])
+
+    const requestGalleryWritePermission = useCallback(async () => {
+      // console.log("Requesting location permission...")
+      const result = await request(
+        Platform.OS === "android"
+          ? PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE
+          : PERMISSIONS.IOS.PHOTO_LIBRARY_ADD_ONLY,
+      )
+      // console.log(`Location permission status: ${permission}`)
+
+      if (result !== RESULTS.GRANTED) await Linking.openSettings()
+      setGalleryWritePermission(result)
     }, [])
 
     useEffect(() => {
@@ -146,6 +169,7 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
         latLong: position ? `${position.coords.latitude},${position.coords.longitude}` : null,
       })
       toast("cameraScreen.photoTaken")
+      // CameraRoll.save(photo.path)
     }
 
     const orientation = useOrientation()
@@ -154,6 +178,7 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
       <Screen style={ROOT} preset="scroll">
         {cameraPermission === "authorized" &&
         // microphonePermission === "authorized" &&
+        galleryWritePermission === RESULTS.GRANTED &&
         locationPermission === RESULTS.GRANTED &&
         device ? (
           <View style={CAMERA_CONTAINER}>
@@ -185,6 +210,12 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
           <>
             <Text tx={"cameraScreen.locationPermissionRequired"} />
             <Button tx={"cameraScreen.grant"} onPress={requestLocationPermission} />
+          </>
+        )}
+        {galleryWritePermission && galleryWritePermission !== RESULTS.GRANTED && (
+          <>
+            <Text tx={"cameraScreen.galleryWritePermissionRequired"} />
+            <Button tx={"cameraScreen.grant"} onPress={requestGalleryWritePermission} />
           </>
         )}
       </Screen>

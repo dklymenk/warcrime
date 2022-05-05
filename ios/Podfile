@@ -38,4 +38,5 @@ target 'warcrime' do
   permissions_path = '../node_modules/react-native-permissions/ios'
 
   pod 'Permission-LocationWhenInUse', :path => "#{permissions_path}/LocationWhenInUse"
+  pod 'Permission-PhotoLibraryAddOnly', :path => "#{permissions_path}/PhotoLibraryAddOnly"
 end
