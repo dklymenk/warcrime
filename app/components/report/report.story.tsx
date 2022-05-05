@@ -17,6 +17,8 @@ storiesOf("Report", module)
             photo: "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
             description: null,
             status: ReportStatus.Pending,
+            latLong: undefined,
+            loading: false,
           }}
         />
       </UseCase>
