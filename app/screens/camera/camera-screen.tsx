@@ -16,7 +16,7 @@ import { useOrientation } from "../../utils/useOrientation"
 import { toast } from "../../utils/toast"
 import { Platform } from "expo-modules-core"
 import * as FileSystem from "expo-file-system"
-// import CameraRoll from "@react-native-community/cameraroll"
+import CameraRoll from "@react-native-community/cameraroll"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
@@ -169,7 +169,7 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
         latLong: position ? `${position.coords.latitude},${position.coords.longitude}` : null,
       })
       toast("cameraScreen.photoTaken")
-      // CameraRoll.save(photo.path)
+      CameraRoll.save(photo.path)
     }
 
     const orientation = useOrientation()
