@@ -11,6 +11,7 @@ import {
 import { observer } from "mobx-react-lite"
 import { ReportSnapshot, ReportStatus } from "../../models"
 import { color } from "../../theme"
+import * as FileSystem from "expo-file-system"
 
 const CONTAINER: ViewStyle = {
   aspectRatio: 1,
@@ -55,9 +56,7 @@ export const Report = observer(function Report(props: ReportProps) {
   const { style, report, onPress } = props
   const styles = Object.assign({}, CONTAINER, style)
 
-  const source = report.photo.indexOf("data/user")
-    ? { uri: `file://${report.photo}` }
-    : { uri: report.photo }
+  const source = { uri: `${FileSystem.documentDirectory}${report.photo}` }
 
   return (
     <Pressable onPress={onPress} style={styles}>

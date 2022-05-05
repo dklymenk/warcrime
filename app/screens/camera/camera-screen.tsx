@@ -141,7 +141,7 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
       })
       reportStore.addReport({
         id,
-        photo: uri,
+        photo: `${id}.jpg`,
         status: ReportStatus.Pending,
         latLong: position ? `${position.coords.latitude},${position.coords.longitude}` : null,
       })

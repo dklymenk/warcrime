@@ -9,6 +9,7 @@ import { Button, Header, Screen, Text, TextField } from "../../components"
 import { color } from "../../theme"
 import { ReportStatus, useStores } from "../../models"
 import { TxKeyPath } from "../../i18n"
+import * as FileSystem from "expo-file-system"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
@@ -61,12 +62,19 @@ export const ReportScreen: FC<StackScreenProps<NavigatorParamList, "report">> = 
 
     const { reportStore } = useStores()
     const report = reportStore.reports.find((report) => report.id === id)
+    const uri = `${FileSystem.documentDirectory}${report.photo}`
 
     return (
       <Screen style={ROOT} preset="scroll">
         <Header headerTx="reportScreen.report" leftIcon="back" />
         <View style={CONTENT}>
-          <Image resizeMode="contain" style={PHOTO} source={{ uri: `file://${report.photo}` }} />
+          <Image
+            resizeMode="contain"
+            style={PHOTO}
+            source={{
+              uri,
+            }}
+          />
           {report.latLong && <Text style={POSITION}>{report.latLong}</Text>}
           <TextField
             labelTx="reportScreen.descriptionLabel"

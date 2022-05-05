@@ -53,7 +53,7 @@ export const MainMenuScreen: FC<StackScreenProps<NavigatorParamList, "mainMenu">
         })
 
         reportStore.addReport({
-          photo: uri,
+          photo: asset.fileName,
         })
         toast("mainMenuScreen.loadedFromGallery")
       } catch (error) {
