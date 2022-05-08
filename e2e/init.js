@@ -1,6 +1,6 @@
-const { init, device, cleanup } = require("detox")
-const config = require("../package.json").detox
-const adapter = require("detox/runners/jest/adapter")
+import { init, device, cleanup } from "detox"
+import { detox as config } from "../package.json"
+import adapter from "detox/runners/jest/adapter"
 
 jest.setTimeout(120000)
 jasmine.getEnv().addReporter(adapter)
