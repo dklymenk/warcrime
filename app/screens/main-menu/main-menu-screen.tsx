@@ -78,7 +78,7 @@ export const MainMenuScreen: FC<StackScreenProps<NavigatorParamList, "mainMenu">
           onPress={onGalleryPress}
         />
         <Button
-          testID="camera"
+          testID="reports"
           style={CONTINUE}
           textStyle={CONTINUE_TEXT}
           tx="mainMenuScreen.reports"

@@ -44,6 +44,7 @@ export function Header(props: HeaderProps) {
       {leftIcon ? (
         <Button
           preset="link"
+          testID="BackArrow"
           onPress={
             onLeftPress ??
             (() => {

@@ -1,4 +1,4 @@
-const detox = require("detox")
+const { init, device, cleanup } = require("detox")
 const config = require("../package.json").detox
 const adapter = require("detox/runners/jest/adapter")
 
@@ -6,7 +6,7 @@ jest.setTimeout(120000)
 jasmine.getEnv().addReporter(adapter)
 
 beforeAll(async () => {
-  await detox.init(config)
+  await init(config, { initGlobals: false })
   await device.launchApp()
 })
 
@@ -16,5 +16,5 @@ beforeEach(async () => {
 
 afterAll(async () => {
   await adapter.afterAll()
-  await detox.cleanup()
+  await cleanup()
 })

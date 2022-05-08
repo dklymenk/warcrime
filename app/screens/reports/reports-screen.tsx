@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite"
 import { ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavigatorParamList } from "../../navigators"
-import { Header, Report, Screen } from "../../components"
+import { Header, Report, Screen, Text } from "../../components"
 import { color, spacing } from "../../theme"
 import { useStores } from "../../models"
 import { FlatGrid } from "react-native-super-grid"
@@ -21,20 +21,24 @@ export const ReportsScreen: FC<StackScreenProps<NavigatorParamList, "reports">> 
     const { reports } = reportStore
 
     return (
-      <Screen style={ROOT} preset="fixed">
+      <Screen testID="ReportScreen" style={ROOT} preset="fixed">
         <Header headerTx="mainMenuScreen.reports" leftIcon="back" />
-        <FlatGrid
-          itemDimension={64}
-          spacing={spacing[2]}
-          data={castToSnapshot(reports)}
-          renderItem={({ item }) => (
-            <Report
-              onPress={() => navigation.navigate("report", { id: item.id })}
-              key={item.id}
-              report={castToSnapshot(item)}
-            />
-          )}
-        />
+        {reports.length ? (
+          <FlatGrid
+            itemDimension={64}
+            spacing={spacing[2]}
+            data={castToSnapshot(reports)}
+            renderItem={({ item }) => (
+              <Report
+                onPress={() => navigation.navigate("report", { id: item.id })}
+                key={item.id}
+                report={castToSnapshot(item)}
+              />
+            )}
+          />
+        ) : (
+          <Text testID="NoReportsMessage" tx="reportScreen.noReports" />
+        )}
       </Screen>
     )
   },
