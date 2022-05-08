@@ -1,7 +1,7 @@
 {
   "common": {
-    "ok": "OK!",
-    "cancel": "Cancel",
+    "ok": "Підтвердити",
+    "cancel": "Скасувати",
     "back": "Back"
   },
   "errors": {
@@ -36,6 +36,8 @@
     "descriptionLabel": "Опис",
     "descriptionPlaceholder": "Додайте опис до звіту...",
     "send": "ВІДПРАВИТИ",
+    "deleteReportQuestion": "Видалити звіт?",
+    "deleteReportWarning": "Звіт буде безповоротно видалено",
     "status": {
       "UPLOADED": "Завантажено",
       "ACCEPTED": "Прийнято",

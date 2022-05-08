@@ -1,6 +1,15 @@
 import React, { FC } from "react"
+import { translate, TxKeyPath } from "../../i18n"
 import { observer } from "mobx-react-lite"
-import { ViewStyle, Image, ImageStyle, TextStyle, ActivityIndicator, View } from "react-native"
+import {
+  ViewStyle,
+  Image,
+  ImageStyle,
+  TextStyle,
+  ActivityIndicator,
+  View,
+  Alert,
+} from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavigatorParamList } from "../../navigators"
 import { Button, Header, Screen, Text, TextField } from "../../components"
@@ -8,7 +17,7 @@ import { Button, Header, Screen, Text, TextField } from "../../components"
 // import { useStores } from "../../models"
 import { color } from "../../theme"
 import { ReportStatus, useStores } from "../../models"
-import { TxKeyPath } from "../../i18n"
+
 import * as FileSystem from "expo-file-system"
 
 const ROOT: ViewStyle = {
@@ -38,6 +47,13 @@ const STATUS: TextStyle = {
 const TEXT_FIELD_INPUT: ViewStyle = {
   maxHeight: 120,
 }
+const BUTTON_DELETE: ViewStyle = {
+  position: "absolute",
+  right: 8,
+  top: 28,
+  width: 24,
+  height: 24,
+}
 const LOADING_SPINNER: ViewStyle = {}
 const LOADING_CONTAINER: ViewStyle = {
   position: "absolute",
@@ -55,7 +71,7 @@ const LOADING_CONTAINER: ViewStyle = {
 // }
 
 export const ReportScreen: FC<StackScreenProps<NavigatorParamList, "report">> = observer(
-  function ReportScreen({ route }) {
+  function ReportScreen({ route, navigation }) {
     const {
       params: { id },
     } = route
@@ -63,6 +79,25 @@ export const ReportScreen: FC<StackScreenProps<NavigatorParamList, "report">> = 
     const { reportStore } = useStores()
     const report = reportStore.reports.find((report) => report.id === id)
     const uri = `${FileSystem.documentDirectory}${report.photo}`
+
+    const onDeleteButtonPress = () => {
+      Alert.alert(
+        translate("reportScreen.deleteReportQuestion"),
+        translate("reportScreen.deleteReportWarning"),
+        [
+          {
+            text: translate("common.ok"),
+            onPress: () => {
+              navigation.goBack()
+              reportStore.removeReport(report)
+            },
+          },
+          {
+            text: translate("common.cancel"),
+          },
+        ],
+      )
+    }
 
     return (
       <Screen style={ROOT} preset="scroll">
@@ -97,6 +132,7 @@ export const ReportScreen: FC<StackScreenProps<NavigatorParamList, "report">> = 
           {report.status !== ReportStatus.Pending && (
             <Text style={STATUS} tx={`reportScreen.status.${report.status}` as TxKeyPath} />
           )}
+          <Button style={BUTTON_DELETE} onPress={onDeleteButtonPress}></Button>
           {report.loading && (
             <View style={LOADING_CONTAINER}>
               <ActivityIndicator

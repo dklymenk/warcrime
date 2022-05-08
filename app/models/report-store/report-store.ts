@@ -1,4 +1,4 @@
-import { Instance, SnapshotOrInstance, SnapshotOut, types } from "mobx-state-tree"
+import { destroy, Instance, SnapshotOrInstance, SnapshotOut, types } from "mobx-state-tree"
 import { withEnvironment } from "../extensions/with-environment"
 import { ReportModel } from "../report/report"
 
@@ -16,6 +16,9 @@ export const ReportStoreModel = types
   .actions((self) => ({
     addReport: (report: SnapshotOrInstance<typeof ReportModel>) => {
       self.reports.push(report)
+    },
+    removeReport: (report: SnapshotOrInstance<typeof ReportModel>) => {
+      destroy(report)
     },
   }))
 
