@@ -2,6 +2,7 @@
 // https://github.com/wix/Detox/blob/master/docs/README.md
 
 import { reloadApp } from "./reload"
+import { by, expect, element } from "detox"
 
 describe("Example", () => {
   beforeEach(async () => {

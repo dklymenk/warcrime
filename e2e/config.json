@@ -1,4 +1,5 @@
 {
-  "setupFilesAfterEnv": ["./init.js"],
-  "testEnvironment": "node"
+  "setupFilesAfterEnv": ["./init.ts"],
+  "testEnvironment": "node",
+  "testRegex": "\\.spec\\.ts$"
 }
