@@ -47,13 +47,6 @@ const STATUS: TextStyle = {
 const TEXT_FIELD_INPUT: ViewStyle = {
   maxHeight: 120,
 }
-const BUTTON_DELETE: ViewStyle = {
-  position: "absolute",
-  right: 8,
-  top: 28,
-  width: 24,
-  height: 24,
-}
 const LOADING_SPINNER: ViewStyle = {}
 const LOADING_CONTAINER: ViewStyle = {
   position: "absolute",
@@ -101,7 +94,12 @@ export const ReportScreen: FC<StackScreenProps<NavigatorParamList, "report">> = 
 
     return (
       <Screen style={ROOT} preset="scroll">
-        <Header headerTx="reportScreen.report" leftIcon="back" />
+        <Header
+          headerTx="reportScreen.report"
+          leftIcon="back"
+          rightIcon="close"
+          onRightPress={onDeleteButtonPress}
+        />
         <View style={CONTENT}>
           <Image
             resizeMode="contain"
@@ -132,7 +130,6 @@ export const ReportScreen: FC<StackScreenProps<NavigatorParamList, "report">> = 
           {report.status !== ReportStatus.Pending && (
             <Text style={STATUS} tx={`reportScreen.status.${report.status}` as TxKeyPath} />
           )}
-          <Button style={BUTTON_DELETE} onPress={onDeleteButtonPress}></Button>
           {report.loading && (
             <View style={LOADING_CONTAINER}>
               <ActivityIndicator
