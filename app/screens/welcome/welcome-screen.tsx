@@ -97,18 +97,14 @@ export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> 
           <Header headerTx="welcomeScreen.org" style={HEADER} titleStyle={HEADER_TITLE} />
           <Text style={TITLE} preset="header" tx="welcomeScreen.appName" />
           <Image source={orgLogo} style={ORG_LOGO} />
+          <Text style={[CONTENT, LEGAL]} tx="welcomeScreen.slogan" />
           <Autolink
             style={CONTENT}
             linkStyle={LINK}
             url={false}
             phone
+            email={false}
             matchers={[
-              // Match the @mentions to resolve as telegram links
-              {
-                pattern: /@([^[_]\w+)/g,
-                style: LINK,
-                getLinkUrl: (replacerArgs) => `https://t.me/${replacerArgs[1]}`,
-              },
               // Match markdown url syntax [label](url)
               {
                 pattern: /\[([^[]*)]\(([^(^)]*)\)/g,
@@ -116,23 +112,10 @@ export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> 
                 getLinkUrl: (replacerArgs) => replacerArgs[2],
                 getLinkText: (replacerArgs) => replacerArgs[1],
               },
-              {
-                // Match any url
-                pattern: /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/g,
-                style: LINK,
-                getLinkUrl: (replacerArgs) => replacerArgs[0],
-                getLinkText: (replacerArgs) =>
-                  replacerArgs[0]
-                    // Strip https, www and trailing slash
-                    .replace(/^https?:\/\//i, "")
-                    .replace(/^www./i, "")
-                    .replace(/\/$/i, ""),
-              },
             ]}
             text={translate("welcomeScreen.intro")}
           />
-          <Text style={CONTENT} tx="welcomeScreen.instructions" />
-          <Text style={[CONTENT, LEGAL]} tx="welcomeScreen.legal" />
+          <Text style={[CONTENT, LEGAL]} tx="welcomeScreen.attention" />
         </Screen>
         <SafeAreaView style={FOOTER}>
           <View style={FOOTER_CONTENT}>
