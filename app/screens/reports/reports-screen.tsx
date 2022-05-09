@@ -26,7 +26,7 @@ export const ReportsScreen: FC<StackScreenProps<NavigatorParamList, "reports">> 
         {reports.length ? (
           <FlatGrid
             itemDimension={64}
-            spacing={spacing[2]}
+            spacing={spacing[4]}
             data={castToSnapshot(reports)}
             renderItem={({ item }) => (
               <Report
