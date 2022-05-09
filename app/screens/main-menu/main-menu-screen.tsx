@@ -12,7 +12,7 @@ import * as FileSystem from "expo-file-system"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
-  paddingHorizontal: spacing[4],
+  // paddingHorizontal: spacing[4],
   flex: 1,
 }
 const TEXT: TextStyle = {
@@ -25,7 +25,6 @@ const CONTINUE: ViewStyle = {
   paddingHorizontal: spacing[4],
   margin: spacing[4],
   backgroundColor: color.palette.deepPurple,
-  alignItems: "flex-start",
 }
 const CONTINUE_TEXT: TextStyle = {
   ...TEXT,
