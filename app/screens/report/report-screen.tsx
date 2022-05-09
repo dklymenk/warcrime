@@ -15,7 +15,7 @@ import { NavigatorParamList } from "../../navigators"
 import { Button, Header, Screen, Text, TextField } from "../../components"
 // import { useNavigation } from "@react-navigation/native"
 // import { useStores } from "../../models"
-import { color } from "../../theme"
+import { color, spacing } from "../../theme"
 import { ReportStatus, useStores } from "../../models"
 
 import * as FileSystem from "expo-file-system"
@@ -58,6 +58,10 @@ const LOADING_CONTAINER: ViewStyle = {
   alignItems: "center",
   opacity: 0.9,
   backgroundColor: color.palette.black,
+}
+const FOOTER: ViewStyle = {
+  paddingHorizontal: spacing[4],
+  paddingBottom: spacing[4],
 }
 // const BUTTON_DISABLED: ViewStyle = {
 //   backgroundColor: color.palette.lightGrey,
@@ -109,24 +113,25 @@ export const ReportScreen: FC<StackScreenProps<NavigatorParamList, "report">> = 
             }}
           />
           {report.latLong && <Text style={POSITION}>{report.latLong}</Text>}
-          <TextField
-            labelTx="reportScreen.descriptionLabel"
-            inputStyle={TEXT_FIELD_INPUT}
-            multiline
-            value={report.description}
-            editable={report.status === ReportStatus.Pending}
-            scrollEnabled
-            placeholderTx="reportScreen.descriptionPlaceholder"
-            onChangeText={(v) => report.setDescription(v)}
-          />
-          {report.status === ReportStatus.Pending && (
-            <Button
-              tx="reportScreen.send"
-              // style={!report.description && BUTTON_DISABLED}
-              // disabled={!report.description}
-              onPress={() => report.upload()}
-            ></Button>
-          )}
+          <View style={FOOTER}>
+            <TextField
+              inputStyle={TEXT_FIELD_INPUT}
+              multiline
+              value={report.description}
+              editable={report.status === ReportStatus.Pending}
+              scrollEnabled
+              placeholderTx="reportScreen.descriptionPlaceholder"
+              onChangeText={(v) => report.setDescription(v)}
+            />
+            {report.status === ReportStatus.Pending && (
+              <Button
+                tx="reportScreen.send"
+                // style={!report.description && BUTTON_DISABLED}
+                // disabled={!report.description}
+                onPress={() => report.upload()}
+              ></Button>
+            )}
+          </View>
           {report.status !== ReportStatus.Pending && (
             <Text style={STATUS} tx={`reportScreen.status.${report.status}` as TxKeyPath} />
           )}
