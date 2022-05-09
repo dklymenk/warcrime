@@ -64,21 +64,21 @@ export const MainMenuScreen: FC<StackScreenProps<NavigatorParamList, "mainMenu">
       <Screen testID="MainMenuScreen" style={ROOT} preset="scroll">
         <Header headerTx="mainMenuScreen.mainMenu" leftIcon="back" />
         <Button
-          testID="camera"
+          testID="CameraButton"
           style={CONTINUE}
           textStyle={CONTINUE_TEXT}
           tx="mainMenuScreen.camera"
           onPress={() => navigation.navigate("camera")}
         />
         <Button
-          testID="gallery"
+          testID="GalleryButton"
           style={CONTINUE}
           textStyle={CONTINUE_TEXT}
           tx="mainMenuScreen.gallery"
           onPress={onGalleryPress}
         />
         <Button
-          testID="reports"
+          testID="ReportsButton"
           style={CONTINUE}
           textStyle={CONTINUE_TEXT}
           tx="mainMenuScreen.reports"

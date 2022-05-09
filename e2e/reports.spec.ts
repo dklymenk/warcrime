@@ -9,16 +9,16 @@ describe("Reports", () => {
   })
 
   it("do not exist initially", async () => {
-    await element(by.id("next-screen-button")).tap()
-    await element(by.id("reports")).tap()
+    await element(by.id("ContinueAnonymouslyButton")).tap()
+    await element(by.id("ReportsButton")).tap()
     await expect(element(by.id("NoReportsMessage"))).toBeVisible()
   })
 
   it("can be created from gallery", async () => {
-    await element(by.id("next-screen-button")).tap()
+    await element(by.id("ContinueAnonymouslyButton")).tap()
     // TODO
     // await element(by.id("gallery")).tap()
-    await element(by.id("reports")).tap()
+    await element(by.id("ReportsButton")).tap()
     // await expect(element(by.id("NoReportsMessage"))).not.toBeVisible()
   })
 })

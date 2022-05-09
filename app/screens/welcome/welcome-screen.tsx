@@ -137,7 +137,7 @@ export const WelcomeScreen: FC<StackScreenProps<NavigatorParamList, "welcome">> 
         <SafeAreaView style={FOOTER}>
           <View style={FOOTER_CONTENT}>
             <Button
-              testID="next-screen-button"
+              testID="ContinueAnonymouslyButton"
               style={CONTINUE}
               textStyle={CONTINUE_TEXT}
               tx="welcomeScreen.continue"
