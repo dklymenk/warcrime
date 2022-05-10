@@ -1,6 +1,6 @@
 import React, { FC } from "react"
 import { observer } from "mobx-react-lite"
-import { ViewStyle } from "react-native"
+import { TextStyle, ViewStyle } from "react-native"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavigatorParamList } from "../../navigators"
 import { Header, Report, Screen, Text } from "../../components"
@@ -12,6 +12,9 @@ import { castToSnapshot } from "mobx-state-tree"
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
   flex: 1,
+}
+const NO_REPORTS_MESSAGE: TextStyle = {
+  paddingHorizontal: spacing[4],
 }
 
 export const ReportsScreen: FC<StackScreenProps<NavigatorParamList, "reports">> = observer(
@@ -37,7 +40,7 @@ export const ReportsScreen: FC<StackScreenProps<NavigatorParamList, "reports">> 
             )}
           />
         ) : (
-          <Text testID="NoReportsMessage" tx="reportScreen.noReports" />
+          <Text style={NO_REPORTS_MESSAGE} testID="NoReportsMessage" tx="reportScreen.noReports" />
         )}
       </Screen>
     )
