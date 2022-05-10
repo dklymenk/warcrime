@@ -30,6 +30,15 @@ const HEADER: ViewStyle = {
   paddingTop: spacing[1],
   paddingBottom: spacing[1],
 }
+const PERMISSIONS_CONTAINER: ViewStyle = {
+  paddingHorizontal: spacing[4],
+}
+const PERMISSION_CONTAINER: ViewStyle = {
+  marginBottom: spacing[4],
+}
+const PERMISSION_TEXT: TextStyle = {
+  marginBottom: spacing[1],
+}
 const CAMERA_CONTAINER: ViewStyle = { flex: 1 }
 const POSITION: TextStyle = {
   position: "absolute",
@@ -194,30 +203,32 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
         ) : (
           <Header leftIcon="back" headerTx="mainMenuScreen.camera" />
         )}
-        {cameraPermission && cameraPermission !== "authorized" && (
-          <>
-            <Text tx={"cameraScreen.cameraPermissionRequired"} />
-            <Button tx={"cameraScreen.grant"} onPress={requestCameraPermission} />
-          </>
-        )}
-        {/* {microphonePermission && microphonePermission !== "authorized" && ( */}
-        {/*   <> */}
-        {/*     <Text tx={"cameraScreen.microphonePermissionRequired"} /> */}
-        {/*     <Button tx={"cameraScreen.grant"} onPress={requestMicrophonePermission} /> */}
-        {/*   </> */}
-        {/* )} */}
-        {locationPermission && locationPermission !== RESULTS.GRANTED && (
-          <>
-            <Text tx={"cameraScreen.locationPermissionRequired"} />
-            <Button tx={"cameraScreen.grant"} onPress={requestLocationPermission} />
-          </>
-        )}
-        {galleryWritePermission && galleryWritePermission !== RESULTS.GRANTED && (
-          <>
-            <Text tx={"cameraScreen.galleryWritePermissionRequired"} />
-            <Button tx={"cameraScreen.grant"} onPress={requestGalleryWritePermission} />
-          </>
-        )}
+        <View style={PERMISSIONS_CONTAINER}>
+          {cameraPermission && cameraPermission !== "authorized" && (
+            <View style={PERMISSION_CONTAINER}>
+              <Text style={PERMISSION_TEXT} tx={"cameraScreen.cameraPermissionRequired"} />
+              <Button tx={"cameraScreen.grant"} onPress={requestCameraPermission} />
+            </View>
+          )}
+          {/* {microphonePermission && microphonePermission !== "authorized" && ( */}
+          {/*   <> */}
+          {/*     <Text tx={"cameraScreen.microphonePermissionRequired"} /> */}
+          {/*     <Button tx={"cameraScreen.grant"} onPress={requestMicrophonePermission} /> */}
+          {/*   </> */}
+          {/* )} */}
+          {locationPermission && locationPermission !== RESULTS.GRANTED && (
+            <View style={PERMISSION_CONTAINER}>
+              <Text style={PERMISSION_TEXT} tx={"cameraScreen.locationPermissionRequired"} />
+              <Button tx={"cameraScreen.grant"} onPress={requestLocationPermission} />
+            </View>
+          )}
+          {galleryWritePermission && galleryWritePermission !== RESULTS.GRANTED && (
+            <View style={PERMISSION_CONTAINER}>
+              <Text style={PERMISSION_TEXT} tx={"cameraScreen.galleryWritePermissionRequired"} />
+              <Button tx={"cameraScreen.grant"} onPress={requestGalleryWritePermission} />
+            </View>
+          )}
+        </View>
       </Screen>
     )
   },
