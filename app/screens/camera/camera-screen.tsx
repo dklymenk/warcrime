@@ -178,7 +178,7 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
         id,
         photo: `${id}.jpg`,
         status: ReportStatus.Pending,
-        latLong: position ? `${position.coords.latitude},${position.coords.longitude}` : null,
+        latLong: position ? `${position.coords.latitude},${position.coords.longitude}` : undefined,
       })
       toast("cameraScreen.photoTaken")
       CameraRoll.save(photo.path)
