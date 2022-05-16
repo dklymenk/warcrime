@@ -151,6 +151,7 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
           // See error code charts below.
           console.log(error.code, error.message)
         },
+        { distanceFilter: 1, enableHighAccuracy: true },
       )
       return () => {
         // console.log("unsubscribing from location")
