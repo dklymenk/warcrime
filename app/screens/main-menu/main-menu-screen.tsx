@@ -39,20 +39,28 @@ export const MainMenuScreen: FC<StackScreenProps<NavigatorParamList, "mainMenu">
 
     const onGalleryPress = async () => {
       try {
-        const result = await launchImageLibrary({ mediaType: "photo" })
+        const result = await launchImageLibrary({ mediaType: "mixed" })
         if (result.assets.length === 0) {
           return
         }
 
         const asset = result.assets[0]
-        const uri = `${FileSystem.documentDirectory}${asset.fileName}`
+
+        // TODO https://github.com/react-native-image-picker/react-native-image-picker/issues/1959
+        let fileName = asset.fileName
+        if (asset.type.includes("video") && !fileName.includes(".")) {
+          const extension = asset.type.slice(asset.type.indexOf("/") + 1)
+          fileName = `${fileName}.${extension}`
+        }
+
+        const uri = `${FileSystem.documentDirectory}${fileName}`
         await FileSystem.copyAsync({
           from: asset.uri,
           to: uri,
         })
 
         reportStore.addReport({
-          photo: asset.fileName,
+          photo: fileName,
         })
         toast("mainMenuScreen.loadedFromGallery")
       } catch (error) {
