@@ -17,6 +17,7 @@ import { Button, Header, Screen, Text, TextField } from "../../components"
 // import { useStores } from "../../models"
 import { color, spacing } from "../../theme"
 import { ReportStatus, useStores } from "../../models"
+import VideoPlayer from "react-native-media-console"
 
 import * as FileSystem from "expo-file-system"
 
@@ -27,7 +28,7 @@ const ROOT: ViewStyle = {
 const CONTENT: ViewStyle = {
   flex: 1,
 }
-const PHOTO: ImageStyle = {
+const MEDIA: ImageStyle = {
   flex: 1,
   height: undefined,
   width: undefined,
@@ -105,13 +106,25 @@ export const ReportScreen: FC<StackScreenProps<NavigatorParamList, "report">> = 
           onRightPress={onDeleteButtonPress}
         />
         <View style={CONTENT}>
-          <Image
-            resizeMode="contain"
-            style={PHOTO}
-            source={{
-              uri,
-            }}
-          />
+          {uri.endsWith("mp4") ? (
+            <VideoPlayer
+              // @ts-expect-error
+              source={{ uri }}
+              style={MEDIA}
+              disableBack
+              disableVolume
+              disableFullscreen
+              paused
+            />
+          ) : (
+            <Image
+              resizeMode="contain"
+              style={MEDIA}
+              source={{
+                uri,
+              }}
+            />
+          )}
           {report.latLong && <Text style={POSITION}>{report.latLong}</Text>}
           <View style={FOOTER}>
             <TextField
