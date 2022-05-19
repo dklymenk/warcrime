@@ -1,11 +1,11 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { Linking, View, ViewStyle, TextStyle, Dimensions } from "react-native"
+import { Linking, View, ViewStyle, TextStyle, Dimensions, ImageStyle } from "react-native"
 import { PERMISSIONS, RESULTS, check, request } from "react-native-permissions"
 import Geolocation from "react-native-geolocation-service"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavigatorParamList } from "../../navigators"
-import { Button, Header, Screen, Text } from "../../components"
+import { Button, Header, Icon, Screen, Text } from "../../components"
 import { color, spacing } from "../../theme"
 import { Camera, CameraPermissionStatus, useCameraDevices } from "react-native-vision-camera"
 import { ReportStatus, useStores } from "../../models"
@@ -75,6 +75,12 @@ const VIDEO_BUTTON = (orientation: "PORTRAIT" | "LANDSCAPE", isRecording: boolea
   // transform: [{translateY: }],
   alignSelf: orientation === "PORTRAIT" ? "center" : "flex-end",
 })
+const PHOTO_ICON: ImageStyle = {
+  width: 32,
+}
+const VIDEO_ICON: ImageStyle = {
+  width: 24,
+}
 
 type ValueOf<T> = T[keyof T]
 
@@ -218,7 +224,7 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
               ? `${positionAtVideoStart.coords.latitude},${positionAtVideoStart.coords.longitude}`
               : undefined,
           })
-          toast("cameraScreen.photoTaken")
+          toast("cameraScreen.videoTaken")
           CameraRoll.save(video.path)
         },
         onRecordingError: (error) => {
@@ -257,11 +263,15 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
                 : translate("cameraScreen.waitingForLocation")}
             </Text>
             <Header style={HEADER} leftIcon="back" headerTx="mainMenuScreen.camera" />
-            <Button style={BUTTON(orientation)} onPress={takePicture} />
+            <Button style={BUTTON(orientation)} onPress={takePicture}>
+              <Icon style={PHOTO_ICON} icon="photo" />
+            </Button>
             <Button
               style={VIDEO_BUTTON(orientation, isRecording)}
               onPress={isRecording ? stopRecording : startRecording}
-            />
+            >
+              <Icon style={VIDEO_ICON} icon="video" />
+            </Button>
           </View>
         ) : (
           <Header leftIcon="back" headerTx="mainMenuScreen.camera" />
