@@ -29,7 +29,9 @@
     "galleryWritePermissionRequired": "Для цієї функції потрібен доступ на збереження фотографій у вашій галереї",
     "grant": "НАДАТИ",
     "waitingForLocation": "в очікуванні локації...",
-    "photoTaken": "ФОТО ЗРОБЛЕНО"
+    "photoTaken": "ФОТО ЗРОБЛЕНО",
+    "videoTaken": "ВІДЕО ЗНЯТО",
+    "videoError": "ПІД ЧАС ЗАПИСУ СТАЛАСЯ ПОМИЛКА"
   },
   "reportScreen": {
     "report": "ЗВІТ",
