@@ -7,18 +7,20 @@ import {
   ImageStyle,
   Pressable,
   GestureResponderEvent,
+  Platform,
 } from "react-native"
 import { observer } from "mobx-react-lite"
 import { ReportSnapshot, ReportStatus } from "../../models"
 import { color } from "../../theme"
 import * as FileSystem from "expo-file-system"
+import Video from "react-native-video"
 
 const CONTAINER: ViewStyle = {
   aspectRatio: 1,
   flex: 1,
 }
 
-const IMAGE: ImageStyle = {
+const MEDIA: ImageStyle = {
   flex: 1,
   borderRadius: 8,
 }
@@ -57,10 +59,15 @@ export const Report = observer(function Report(props: ReportProps) {
   const styles = Object.assign({}, CONTAINER, style)
 
   const source = { uri: `${FileSystem.documentDirectory}${report.photo}` }
+  const isVideo = report.photo.endsWith("mp4")
 
   return (
     <Pressable onPress={onPress} style={styles}>
-      <Image style={IMAGE} key={report.id} source={source} />
+      {isVideo && Platform.OS === "ios" ? (
+        <Video resizeMode="cover" style={MEDIA} paused source={source} />
+      ) : (
+        <Image style={MEDIA} key={report.id} source={source} />
+      )}
       <View style={STATUS_CIRCLE(report.status)} />
     </Pressable>
   )
