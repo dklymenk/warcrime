@@ -108,7 +108,6 @@ export const ReportScreen: FC<StackScreenProps<NavigatorParamList, "report">> = 
         <View style={CONTENT}>
           {uri.endsWith("mp4") ? (
             <VideoPlayer
-              // @ts-expect-error
               source={{ uri }}
               style={MEDIA}
               disableBack
