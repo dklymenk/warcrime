@@ -284,10 +284,10 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
             </View>
           )}
           {microphonePermission && microphonePermission !== "authorized" && (
-            <>
-              <Text tx={"cameraScreen.microphonePermissionRequired"} />
+            <View style={PERMISSION_CONTAINER}>
+              <Text style={PERMISSION_TEXT} tx={"cameraScreen.microphonePermissionRequired"} />
               <Button tx={"cameraScreen.grant"} onPress={requestMicrophonePermission} />
-            </>
+            </View>
           )}
           {locationPermission && locationPermission !== RESULTS.GRANTED && (
             <View style={PERMISSION_CONTAINER}>
