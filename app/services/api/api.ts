@@ -132,6 +132,36 @@ export class Api {
   }
 
   /**
+   * Uploads a single file as base64
+   */
+
+  async uploadFileBase64(filename: string): Promise<Types.UploadFileResult> {
+    const uri = `${FileSystem.documentDirectory}${filename}`
+    const base64 = await FileSystem.readAsStringAsync(uri, {
+      encoding: "base64",
+    })
+
+    const response: ApiResponse<any> = await this.apisauce.post("/upload/base64", {
+      filename,
+      base64,
+    })
+
+    // the typical ways to die when calling an api
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
+
+    // transform the data into the format we are expecting
+    try {
+      const filename: string = this.config.url + "/files/" + response.data.filename
+      return { kind: "ok", upload: { filename } }
+    } catch {
+      return { kind: "bad-data" }
+    }
+  }
+
+  /**
    * Post a report
    */
 

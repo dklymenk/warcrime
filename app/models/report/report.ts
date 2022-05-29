@@ -3,6 +3,7 @@ import { withEnvironment } from "../extensions/with-environment"
 import { RootStore } from "../root-store/root-store"
 import { v4 as uuidv4 } from "uuid"
 import "react-native-get-random-values"
+import { Platform } from "expo-modules-core"
 
 export enum ReportStatus {
   Pending = "PENDING",
@@ -38,7 +39,11 @@ export const ReportModel = types
       self.loading = true
       const rootStore = getRoot<RootStore>(self)
       try {
-        const uploadFileResult = yield* toGenerator(self.environment.api.uploadFile(self.photo))
+        const uploadFileResult = yield* toGenerator(
+          self.photo.indexOf("video") === -1 && Platform.OS === "ios"
+            ? self.environment.api.uploadFileBase64(self.photo)
+            : self.environment.api.uploadFile(self.photo),
+        )
 
         if (uploadFileResult.kind === "ok") {
           const result = yield* toGenerator(
