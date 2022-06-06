@@ -249,6 +249,7 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
         device ? (
           <View style={CAMERA_CONTAINER}>
             <Camera
+              preset="medium"
               ref={camera}
               style={FULL}
               device={device}
