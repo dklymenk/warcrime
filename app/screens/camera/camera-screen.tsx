@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from "react"
+import React, { FC, useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { observer } from "mobx-react-lite"
 import { Linking, View, ViewStyle, TextStyle, Dimensions, ImageStyle } from "react-native"
 import { PERMISSIONS, RESULTS, check, request } from "react-native-permissions"
@@ -182,6 +182,14 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
 
     const devices = useCameraDevices()
     const device = devices.back
+    const format = useMemo(() => {
+      return device?.formats
+        .filter((f) => f.videoWidth < 720)
+        .reduce((prev, curr) => {
+          if (curr.videoWidth > prev.videoWidth) return curr
+          return prev
+        })
+    }, [device?.formats])
 
     const { reportStore } = useStores()
 
@@ -249,7 +257,6 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
         device ? (
           <View style={CAMERA_CONTAINER}>
             <Camera
-              preset="medium"
               ref={camera}
               style={FULL}
               device={device}
@@ -257,6 +264,8 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
               photo={true}
               video={true}
               audio={true}
+              fps={24}
+              format={format}
             />
             <Text style={[POSITION, position && POSITION_FOUND]}>
               {position
