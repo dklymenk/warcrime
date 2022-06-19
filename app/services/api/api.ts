@@ -4,6 +4,7 @@ import { ApiConfig, DEFAULT_API_CONFIG } from "./api-config"
 import * as Types from "./api.types"
 import { ReportSnapshot, ReportStatus } from "../../models"
 import * as FileSystem from "expo-file-system"
+import Upload, { UploadOptions } from "react-native-background-upload"
 
 /**
  * Manages all requests to the API.
@@ -145,6 +146,62 @@ export class Api {
       filename,
       base64,
     })
+
+    // the typical ways to die when calling an api
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
+
+    // transform the data into the format we are expecting
+    try {
+      const filename: string = this.config.url + "/files/" + response.data.filename
+      return { kind: "ok", upload: { filename } }
+    } catch {
+      return { kind: "bad-data" }
+    }
+  }
+
+  async uploadRawFile(filename: string): Promise<Types.UploadFileResult> {
+    const uri = `${FileSystem.documentDirectory}${filename}`
+    console.log(uri)
+    const options: UploadOptions = {
+      url: this.config.url + "/upload/raw",
+      path: uri,
+      method: "POST",
+      type: "raw",
+      headers: {
+        "content-type": "video/mp4", // Customize content-type
+      },
+      // Below are options only supported on Android
+      notification: {
+        enabled: true,
+      },
+    }
+
+    const uploadViaBackgroundSerice = () =>
+      new Promise<ApiResponse<any>>((resolve, reject) => {
+        Upload.startUpload(options)
+          .then((uploadId) => {
+            console.log(`Upload started with upload ID: ${uploadId}`)
+            Upload.addListener("completed", uploadId, (data) => {
+              // data includes responseCode: number and responseBody: Object
+              console.log("Completed!")
+              resolve({ ok: true, data: data.responseBody, problem: null, originalError: null })
+            })
+            Upload.addListener("error", uploadId, (data) => {
+              // data includes responseCode: number and responseBody: Object
+              console.log("Error!")
+              reject(data)
+            })
+          })
+          .catch((error) => {
+            console.log(error)
+            reject(error)
+          })
+      })
+
+    const response: ApiResponse<any> = await uploadViaBackgroundSerice()
 
     // the typical ways to die when calling an api
     if (!response.ok) {
