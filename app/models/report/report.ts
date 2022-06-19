@@ -40,9 +40,10 @@ export const ReportModel = types
       const rootStore = getRoot<RootStore>(self)
       try {
         const uploadFileResult = yield* toGenerator(
+          // TODO
           self.photo.indexOf("mp4") === -1 && Platform.OS === "ios"
-            ? self.environment.api.uploadFileBase64(self.photo)
-            : self.environment.api.uploadFile(self.photo),
+            ? self.environment.api.uploadRawFile(self.photo)
+            : self.environment.api.uploadRawFile(self.photo),
         )
 
         if (uploadFileResult.kind === "ok") {
