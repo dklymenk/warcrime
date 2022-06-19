@@ -12186,6 +12186,11 @@ react-native-autolink@^4.0.0:
   dependencies:
     autolinker "^3.14.3"
 
+react-native-background-upload@^6.5.1:
+  version "6.5.1"
+  resolved "https://registry.yarnpkg.com/react-native-background-upload/-/react-native-background-upload-6.5.1.tgz#862e1d783e608bdca073ca2d7aeae79503e0507c"
+  integrity sha512-cKVCrpQ7xIePL9rh+TBFQw69Z2eG3tL5/R732+I7lfpq6F9xwrwkYDgxqKfGzTtY3V6JZ3ZENCO8MOMEh6O0jw==
+
 react-native-clean-project@^3.6.3:
   version "3.6.7"
   resolved "https://registry.yarnpkg.com/react-native-clean-project/-/react-native-clean-project-3.6.7.tgz#6d22ad22fe3a1e6efdb040eb66f9bdfb2273ac2e"

@@ -297,6 +297,8 @@ PODS:
   - React-jsinspector (0.67.2)
   - React-logger (0.67.2):
     - glog
+  - react-native-background-upload (6.5.1):
+    - React
   - react-native-cameraroll (4.0.2):
     - React-Core
   - react-native-geolocation-service (5.3.0-beta.4):
@@ -450,6 +452,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
+  - react-native-background-upload (from `../node_modules/react-native-background-upload`)
   - "react-native-cameraroll (from `../node_modules/@react-native-community/cameraroll`)"
   - react-native-geolocation-service (from `../node_modules/react-native-geolocation-service`)
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
@@ -552,6 +555,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
+  react-native-background-upload:
+    :path: "../node_modules/react-native-background-upload"
   react-native-cameraroll:
     :path: "../node_modules/@react-native-community/cameraroll"
   react-native-geolocation-service:
@@ -646,6 +651,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 52beb652bbc61201bd70cbe4f0b8edb607e8da4f
   React-jsinspector: 595f76eba2176ebd8817a1fffd47b84fbdab9383
   React-logger: 23de8ea0f44fa00ee77e96060273225607fd4d78
+  react-native-background-upload: c62f25610ffd49b1781fbdf1135b3b17f2f914b9
   react-native-cameraroll: 1965db75c851b15e77a22ca0ac78e32af6b571ae
   react-native-geolocation-service: c0efb872258ed9240f1003a70fca9e9757e5c785
   react-native-get-random-values: 30b3f74ca34e30e2e480de48e4add2706a40ac8f
