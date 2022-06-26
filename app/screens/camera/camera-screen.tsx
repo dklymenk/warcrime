@@ -185,7 +185,7 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
     const device = devices.back
     const format = useMemo(() => {
       return device?.formats
-        .filter((f) => f.videoWidth < 720)
+        .filter((f) => f.videoWidth <= 1280)
         .reduce((prev, curr) => {
           if (curr.videoWidth > prev.videoWidth) return curr
           return prev
