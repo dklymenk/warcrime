@@ -5,6 +5,7 @@ import * as Types from "./api.types"
 import { ReportSnapshot, ReportStatus } from "../../models"
 import * as FileSystem from "expo-file-system"
 import Upload, { UploadOptions } from "react-native-background-upload"
+import { Platform } from "expo-modules-core"
 
 /**
  * Manages all requests to the API.
@@ -163,7 +164,10 @@ export class Api {
   }
 
   async uploadRawFile(filename: string): Promise<Types.UploadFileResult> {
-    const uri = `${FileSystem.documentDirectory}${filename}`
+    let uri = `${FileSystem.documentDirectory}${filename}`
+    if (Platform.OS === "android") {
+      uri = uri.replace("file://", "")
+    }
 
     // TODO do something better to get mimeType
     const mimeType = filename.includes("mp4") ? "video/mp4" : "image/jpeg"
