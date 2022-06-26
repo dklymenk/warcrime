@@ -17,6 +17,7 @@ import { toast } from "../../utils/toast"
 import { Platform } from "expo-modules-core"
 import * as FileSystem from "expo-file-system"
 import CameraRoll from "@react-native-community/cameraroll"
+import RNFS from "react-native-fs"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
@@ -234,8 +235,9 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
               ? `${positionAtVideoStart.coords.latitude},${positionAtVideoStart.coords.longitude}`
               : undefined,
           })
+          await CameraRoll.save(video.path)
+          await RNFS.unlink(video.path)
           toast("cameraScreen.videoTaken")
-          CameraRoll.save(video.path)
         },
         onRecordingError: (error) => {
           console.tron.error(error, null)
