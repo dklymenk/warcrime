@@ -181,7 +181,7 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
       }
     }, [locationPermission])
 
-    const devices = useCameraDevices("wide-angle-camera")
+    const devices = useCameraDevices()
     const device = devices.back
     const format = useMemo(() => {
       return device?.formats
