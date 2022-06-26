@@ -180,7 +180,7 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
       }
     }, [locationPermission])
 
-    const devices = useCameraDevices()
+    const devices = useCameraDevices("wide-angle-camera")
     const device = devices.back
     const format = useMemo(() => {
       return device?.formats
@@ -215,7 +215,9 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
     const startRecording = async () => {
       setIsRecording(true)
       const positionAtVideoStart = { ...position }
+      const codecs = await camera.current.getAvailableVideoCodecs()
       camera.current.startRecording({
+        videoCodec: codecs.find((codec) => codec === "h264"),
         onRecordingFinished: async (video) => {
           setIsRecording(false)
           const id = uuidv4()
