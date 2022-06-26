@@ -187,7 +187,12 @@ export class Api {
             Upload.addListener("completed", uploadId, (data) => {
               // data includes responseCode: number and responseBody: Object
               console.log("Completed!")
-              resolve({ ok: true, data: data.responseBody, problem: null, originalError: null })
+              resolve({
+                ok: true,
+                data: JSON.parse(data.responseBody),
+                problem: null,
+                originalError: null,
+              })
             })
             Upload.addListener("error", uploadId, (data) => {
               // data includes responseCode: number and responseBody: Object
