@@ -164,14 +164,17 @@ export class Api {
 
   async uploadRawFile(filename: string): Promise<Types.UploadFileResult> {
     const uri = `${FileSystem.documentDirectory}${filename}`
-    console.log(uri)
+
+    // TODO do something better to get mimeType
+    const mimeType = filename.includes("mp4") ? "video/mp4" : "image/jpeg"
+
     const options: UploadOptions = {
       url: this.config.url + "/upload/raw",
       path: uri,
       method: "POST",
       type: "raw",
       headers: {
-        "content-type": "video/mp4", // Customize content-type
+        "content-type": mimeType,
       },
       // Below are options only supported on Android
       notification: {
@@ -183,10 +186,10 @@ export class Api {
       new Promise<ApiResponse<any>>((resolve, reject) => {
         Upload.startUpload(options)
           .then((uploadId) => {
-            console.log(`Upload started with upload ID: ${uploadId}`)
+            // console.log(`Upload started with upload ID: ${uploadId}`)
             Upload.addListener("completed", uploadId, (data) => {
               // data includes responseCode: number and responseBody: Object
-              console.log("Completed!")
+              // console.log("Completed!")
               resolve({
                 ok: true,
                 data: JSON.parse(data.responseBody),
@@ -196,12 +199,12 @@ export class Api {
             })
             Upload.addListener("error", uploadId, (data) => {
               // data includes responseCode: number and responseBody: Object
-              console.log("Error!")
+              // console.log("Error!")
               reject(data)
             })
           })
           .catch((error) => {
-            console.log(error)
+            console.error(error)
             reject(error)
           })
       })
