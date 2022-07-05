@@ -1,4 +1,13 @@
-import { destroy, Instance, SnapshotOrInstance, SnapshotOut, types } from "mobx-state-tree"
+import {
+  destroy,
+  flow,
+  Instance,
+  SnapshotOrInstance,
+  SnapshotOut,
+  toGenerator,
+  types,
+} from "mobx-state-tree"
+import { DocumentDirectoryPath, unlink } from "react-native-fs"
 import { withEnvironment } from "../extensions/with-environment"
 import { ReportModel } from "../report/report"
 
@@ -17,9 +26,11 @@ export const ReportStoreModel = types
     addReport: (report: SnapshotOrInstance<typeof ReportModel>) => {
       self.reports.push(report)
     },
-    removeReport: (report: SnapshotOrInstance<typeof ReportModel>) => {
+    removeReport: flow(function* removeReport(report: SnapshotOrInstance<typeof ReportModel>) {
+      const uri = `${DocumentDirectoryPath}/${report.photo}`
+      yield* toGenerator(unlink(uri))
       destroy(report)
-    },
+    }),
   }))
 
 type ReportStoreType = Instance<typeof ReportStoreModel>
