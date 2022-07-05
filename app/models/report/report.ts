@@ -38,7 +38,7 @@ export const ReportModel = types
       self.loading = true
       const rootStore = getRoot<RootStore>(self)
       try {
-        const uploadFileResult = yield* toGenerator(self.environment.api.uploadRawFile(self.photo))
+        const uploadFileResult = yield* toGenerator(self.environment.api.uploadFile(self.photo))
 
         if (uploadFileResult.kind === "ok") {
           const result = yield* toGenerator(
