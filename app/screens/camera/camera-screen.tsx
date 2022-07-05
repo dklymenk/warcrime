@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from "react"
 import { observer } from "mobx-react-lite"
-import { Linking, View, ViewStyle, TextStyle, Dimensions, ImageStyle } from "react-native"
+import { Linking, View, ViewStyle, TextStyle, Dimensions, ImageStyle, AppState } from "react-native"
 import { PERMISSIONS, RESULTS, check, request } from "react-native-permissions"
 import Geolocation from "react-native-geolocation-service"
 import { StackScreenProps } from "@react-navigation/stack"
@@ -93,6 +93,8 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
     const [galleryWritePermission, setGalleryWritePermission] = useState<ValueOf<typeof RESULTS>>()
     const [position, setPosition] = useState<Geolocation.GeoPosition>()
     const [isRecording, setIsRecording] = useState<boolean>()
+    const appStateRef = useRef(AppState.currentState)
+    const [appState, setAppState] = useState(appStateRef.current)
 
     useEffect(() => {
       Camera.getCameraPermissionStatus().then(setCameraPermission)
@@ -159,7 +161,22 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
     }, [])
 
     useEffect(() => {
+      const subscription = AppState.addEventListener("change", (nextAppState) => {
+        appStateRef.current = nextAppState
+        setAppState(appStateRef.current)
+        // console.log("AppState", appStateRef.current)
+      })
+
+      return () => {
+        subscription.remove()
+      }
+    }, [])
+
+    useEffect(() => {
       if (locationPermission !== RESULTS.GRANTED) {
+        return undefined
+      }
+      if (appState !== "active") {
         return undefined
       }
       // console.log("Trying to get position")
@@ -179,7 +196,7 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
         Geolocation.clearWatch(watchId)
         Geolocation.stopObserving()
       }
-    }, [locationPermission])
+    }, [locationPermission, appState])
 
     const devices = useCameraDevices()
     const device = devices.back
