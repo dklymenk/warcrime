@@ -11,6 +11,8 @@ const { makeMetroConfig } = require("@rnx-kit/metro-config")
 const MetroSymlinksResolver = require("@rnx-kit/metro-resolver-symlinks")
 const { getDefaultConfig } = require("metro-config")
 
+const { resolver: defaultResolver } = getDefaultConfig.getDefaultValues();
+
 module.exports = (async () => {
   const defaultConfig = await getDefaultConfig()
   return makeMetroConfig({
@@ -18,6 +20,10 @@ module.exports = (async () => {
     resolver: {
       resolveRequest: MetroSymlinksResolver(),
       assetExts: [...defaultConfig.resolver.assetExts, "bin"],
+      sourceExts: [
+        process.env.RN_SRC_EXT && process.env.RN_SRC_EXT.split(','),
+        ...defaultResolver.sourceExts,
+      ],
     },
   })
 })()
