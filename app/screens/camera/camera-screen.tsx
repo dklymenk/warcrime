@@ -7,7 +7,7 @@ import { StackScreenProps } from "@react-navigation/stack"
 import { NavigatorParamList } from "../../navigators"
 import { Button, Header, Icon, Screen, Text } from "../../components"
 import { color, spacing } from "../../theme"
-import { Camera, CameraPermissionStatus, useCameraDevices } from "react-native-vision-camera"
+import { Camera, useCameraDevices } from "../../proxy-modules/react-native-vision-camera"
 import { ReportStatus, useStores } from "../../models"
 import "react-native-get-random-values"
 import { v4 as uuidv4 } from "uuid"
@@ -18,6 +18,7 @@ import { Platform } from "expo-modules-core"
 import * as FileSystem from "expo-file-system"
 import CameraRoll from "@react-native-community/cameraroll"
 import RNFS from "react-native-fs"
+import { CameraPermissionStatus } from "react-native-vision-camera"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
