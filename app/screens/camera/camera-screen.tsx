@@ -271,6 +271,7 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
         device ? (
           <View style={CAMERA_CONTAINER}>
             <Camera
+              enableZoomGesture
               ref={camera}
               style={FULL}
               device={device}
