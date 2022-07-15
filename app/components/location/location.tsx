@@ -45,19 +45,26 @@ export const Location = observer(function Location(props: LocationProps) {
 
   const [distance, setDistance] = React.useState("")
 
+  const calculateDistance = React.useCallback(() => {
+    const now = new Date()
+    const then = new Date(location.updatedAt)
+    const minutes = differenceInMinutes(now, then)
+
+    if (minutes < 1) {
+      return
+    }
+
+    const distance = formatDistance(then, now, {
+      addSuffix: true,
+      locale: uk,
+    })
+
+    setDistance(distance)
+  }, [])
+
   React.useEffect(() => {
-    const timer = setInterval(() => {
-      const diffirenceInMinutes = differenceInMinutes(new Date(), new Date(location.updatedAt))
-      if (diffirenceInMinutes < 1) {
-        return
-      }
-      const distance = formatDistance(new Date(location.updatedAt), new Date(), {
-        addSuffix: true,
-        locale: uk,
-        includeSeconds: true,
-      })
-      setDistance(distance)
-    }, 5 * 1000)
+    calculateDistance()
+    const timer = setInterval(calculateDistance, 5 * 1000)
     return () => {
       clearInterval(timer)
     }
