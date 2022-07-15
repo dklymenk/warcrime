@@ -5,13 +5,12 @@ import { PERMISSIONS, RESULTS, check, request } from "react-native-permissions"
 import Geolocation from "react-native-geolocation-service"
 import { StackScreenProps } from "@react-navigation/stack"
 import { NavigatorParamList } from "../../navigators"
-import { Button, Header, Icon, Screen, Text } from "../../components"
+import { Button, Header, Icon, Screen, Text, Location } from "../../components"
 import { color, spacing } from "../../theme"
 import { Camera, useCameraDevices } from "../../proxy-modules/react-native-vision-camera"
 import { ReportStatus, useStores } from "../../models"
 import "react-native-get-random-values"
 import { v4 as uuidv4 } from "uuid"
-import { translate } from "../../i18n"
 import { useOrientation } from "../../utils/useOrientation"
 import { toast } from "../../utils/toast"
 import { Platform } from "expo-modules-core"
@@ -46,10 +45,6 @@ const POSITION: TextStyle = {
   position: "absolute",
   top: 32,
   right: 8,
-  color: color.palette.angry,
-}
-const POSITION_FOUND: TextStyle = {
-  color: color.palette.offWhite,
 }
 const BUTTON = (orientation: "PORTRAIT" | "LANDSCAPE"): ViewStyle => ({
   position: "absolute",
@@ -278,9 +273,7 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
               audio={true}
               fps={24}
             />
-            <Text style={[POSITION, location.latLong && POSITION_FOUND]}>
-              {location.latLong || translate("cameraScreen.waitingForLocation")}
-            </Text>
+            <Location location={location} style={POSITION} />
             <Header style={HEADER} leftIcon="back" headerTx="mainMenuScreen.camera" />
             <Button style={BUTTON(orientation)} onPress={takePicture}>
               <Icon style={PHOTO_ICON} icon="photo" />
