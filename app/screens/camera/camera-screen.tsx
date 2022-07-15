@@ -92,7 +92,6 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
     const [microphonePermission, setMicrophonePermission] = useState<CameraPermissionStatus>()
     const [locationPermission, setLocationPermission] = useState<ValueOf<typeof RESULTS>>()
     const [galleryWritePermission, setGalleryWritePermission] = useState<ValueOf<typeof RESULTS>>()
-    const [position, setPosition] = useState<Geolocation.GeoPosition>()
     const [isRecording, setIsRecording] = useState<boolean>()
     const appStateRef = useRef(AppState.currentState)
     const [appState, setAppState] = useState(appStateRef.current)
@@ -184,7 +183,7 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
       const watchId = Geolocation.watchPosition(
         (position) => {
           // console.log(position)
-          setPosition(position)
+          location.update({ latLong: `${position.coords.latitude},${position.coords.longitude}` })
         },
         (error) => {
           // See error code charts below.
@@ -202,7 +201,7 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
     const devices = useCameraDevices()
     const device = devices.back
 
-    const { reportStore } = useStores()
+    const { reportStore, location } = useStores()
 
     const camera = useRef<Camera>(null)
     const takePicture = async () => {
@@ -218,14 +217,14 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
         id,
         photo: `${id}.jpg`,
         status: ReportStatus.Pending,
-        latLong: position ? `${position.coords.latitude},${position.coords.longitude}` : undefined,
+        latLong: location.latLong || undefined,
       })
       toast("cameraScreen.photoTaken")
       CameraRoll.save(photo.path)
     }
     const startRecording = async () => {
       setIsRecording(true)
-      const positionAtVideoStart = { ...position }
+      const positionAtVideoStart = location.latLong
       const codecs = await camera.current.getAvailableVideoCodecs()
       camera.current.startRecording({
         videoCodec: codecs.find((codec) => codec === "h264"),
@@ -241,9 +240,7 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
             id,
             photo: `${id}.mp4`,
             status: ReportStatus.Pending,
-            latLong: positionAtVideoStart
-              ? `${positionAtVideoStart.coords.latitude},${positionAtVideoStart.coords.longitude}`
-              : undefined,
+            latLong: positionAtVideoStart || undefined,
           })
           await CameraRoll.save(video.path)
           await RNFS.unlink(video.path)
@@ -281,10 +278,8 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
               audio={true}
               fps={24}
             />
-            <Text style={[POSITION, position && POSITION_FOUND]}>
-              {position
-                ? `${position.coords.latitude}, ${position.coords.longitude}`
-                : translate("cameraScreen.waitingForLocation")}
+            <Text style={[POSITION, location.latLong && POSITION_FOUND]}>
+              {location.latLong || translate("cameraScreen.waitingForLocation")}
             </Text>
             <Header style={HEADER} leftIcon="back" headerTx="mainMenuScreen.camera" />
             <Button style={BUTTON(orientation)} onPress={takePicture}>
