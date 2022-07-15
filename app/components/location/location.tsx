@@ -43,7 +43,7 @@ export const Location = observer(function Location(props: LocationProps) {
   const { style, location } = props
   const styles = Object.assign({}, CONTAINER, style)
 
-  const [distance, setDistance] = React.useState("")
+  const isMounted = React.useRef(false)
 
   const calculateDistance = React.useCallback(() => {
     const now = new Date()
@@ -51,7 +51,7 @@ export const Location = observer(function Location(props: LocationProps) {
     const minutes = differenceInMinutes(now, then)
 
     if (minutes < 1) {
-      return
+      return ""
     }
 
     const distance = formatDistance(then, now, {
@@ -59,19 +59,24 @@ export const Location = observer(function Location(props: LocationProps) {
       locale: uk,
     })
 
-    setDistance(distance)
+    return distance
   }, [])
 
+  const [distance, setDistance] = React.useState(calculateDistance)
+
   React.useEffect(() => {
-    calculateDistance()
-    const timer = setInterval(calculateDistance, 5 * 1000)
+    const timer = setInterval(() => setDistance(calculateDistance()), 5 * 1000)
     return () => {
       clearInterval(timer)
     }
   }, [])
 
   React.useEffect(() => {
-    setDistance("")
+    if (isMounted.current) {
+      setDistance("")
+    } else {
+      isMounted.current = true
+    }
   }, [location.latLong])
 
   return (
