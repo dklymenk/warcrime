@@ -194,6 +194,9 @@ export class Api {
             Upload.addListener("completed", uploadId, (data) => {
               // data includes responseCode: number and responseBody: Object
               // console.log("Completed!")
+              if (data.responseCode >= 400) {
+                reject(data)
+              }
               resolve({
                 ok: true,
                 data: JSON.parse(data.responseBody),
