@@ -46,6 +46,10 @@ export const Location = observer(function Location(props: LocationProps) {
   const isMounted = React.useRef(false)
 
   const calculateDistance = React.useCallback(() => {
+    if (!location.updatedAt) {
+      return ""
+    }
+
     const now = new Date()
     const then = new Date(location.updatedAt)
     const minutes = differenceInMinutes(now, then)
