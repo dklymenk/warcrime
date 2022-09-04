@@ -18,6 +18,7 @@ import * as FileSystem from "expo-file-system"
 import CameraRoll from "@react-native-community/cameraroll"
 import RNFS from "react-native-fs"
 import { CameraPermissionStatus } from "react-native-vision-camera"
+import { generate } from "../../utils/filename"
 
 const ROOT: ViewStyle = {
   backgroundColor: color.palette.black,
@@ -202,7 +203,8 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
     const takePicture = async () => {
       const photo = await camera.current.takePhoto()
       const id = uuidv4()
-      const uri = `${FileSystem.documentDirectory}${id}.jpg`
+      const filename = generate("jpg")
+      const uri = `${FileSystem.documentDirectory}${filename}`
 
       await FileSystem.copyAsync({
         from: `file://${photo.path}`,
@@ -210,7 +212,7 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
       })
       reportStore.addReport({
         id,
-        photo: `${id}.jpg`,
+        photo: filename,
         status: ReportStatus.Pending,
         latLong: location.latLong || undefined,
       })
@@ -226,14 +228,15 @@ export const CameraScreen: FC<StackScreenProps<NavigatorParamList, "camera">> = 
         onRecordingFinished: async (video) => {
           setIsRecording(false)
           const id = uuidv4()
-          const uri = `${FileSystem.documentDirectory}${id}.mp4`
+          const filename = generate("mp4")
+          const uri = `${FileSystem.documentDirectory}${filename}`
           await FileSystem.copyAsync({
             from: `file://${video.path}`,
             to: uri,
           })
           reportStore.addReport({
             id,
-            photo: `${id}.mp4`,
+            photo: filename,
             status: ReportStatus.Pending,
             latLong: positionAtVideoStart || undefined,
           })
