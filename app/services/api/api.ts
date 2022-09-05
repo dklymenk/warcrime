@@ -179,6 +179,7 @@ export class Api {
       type: "raw",
       headers: {
         "content-type": mimeType,
+        "content-disposition": `attachment; filename="${filename}"`,
       },
       // Below are options only supported on Android
       notification: {
