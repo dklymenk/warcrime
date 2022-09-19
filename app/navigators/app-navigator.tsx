@@ -10,8 +10,6 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import {
   WelcomeScreen,
-  DemoScreen,
-  DemoListScreen,
   MainMenuScreen,
   CameraScreen,
   ReportsScreen,
@@ -54,8 +52,6 @@ const AppStack = () => {
       initialRouteName="welcome"
     >
       <Stack.Screen name="welcome" component={WelcomeScreen} />
-      <Stack.Screen name="demo" component={DemoScreen} />
-      <Stack.Screen name="demoList" component={DemoListScreen} />
       <Stack.Screen name="mainMenu" component={MainMenuScreen} />
       <Stack.Screen name="camera" component={CameraScreen} />
       <Stack.Screen name="reports" component={ReportsScreen} />
