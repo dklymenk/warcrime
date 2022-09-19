@@ -1,5 +1,12 @@
 import { LocationModel } from "./location"
 
+beforeAll(() => {
+  jest.useFakeTimers("modern")
+})
+afterAll(() => {
+  jest.useFakeTimers()
+})
+
 test("can be created", () => {
   const instance = LocationModel.create({})
 

@@ -8,7 +8,7 @@ import "./mock-i18n"
 import "./mock-reactotron"
 import "./mock-fs"
 
-jest.useFakeTimers("modern")
+jest.useFakeTimers()
 declare global {
   let __TEST__
 }
